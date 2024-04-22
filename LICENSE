@@ -31,8 +31,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ******************************************************************************
 ROS 2 Foxy Fitzroy is licensed under the Apache License 2.0
 
-Various portions of the code are taken from the ROS 2 Foxy Fitzroy 
-      (https://github.com/ros2/rclcpp/blob/master/LICENSE), 
+Various portions of the code are taken from the ROS 2 Foxy Fitzroy
+      (https://github.com/ros2/rclcpp/blob/master/LICENSE),
 and are used in accordance with the following license:
 ******************************************************************************
    Copyright is owned by its contributors, https://github.com/ros2/rclcpp
@@ -91,9 +91,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ******************************************************************************
 QT 5.12 is licensed under the LGPL v3 License
 
-The following free software components of "QT" are used and distributed pursuant 
+The following free software components of "QT" are used and distributed pursuant
 to the LGPL v3 License, and are subject to the terms and conditions of said License
-Qt Core 5.12, Distributed under the LGPL v3 License: 
+Qt Core 5.12, Distributed under the LGPL v3 License:
       (https://doc.qt.io/qt-5.12/qtcore-index.html)
 Qt Quick 5.12, Distributed under the LGPL v3 License:
       (https://doc-snapshots.qt.io/qt5-5.12/qtquick-index.html)
@@ -443,4 +443,3 @@ http://www.apache.org/licenses/
       of your accepting any such warranty or additional liability.
 
    END OF TERMS AND CONDITIONS
-

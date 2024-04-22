@@ -1,19 +1,16 @@
 import os
 import shutil
 import sys
-
-import xml.etree.cElementTree as ET
+import xml.etree.cElementTree as ET  # noqa: N812, N817
 
 import rclpy
 
-from tm_mod_urdf._modify_urdf import modify_urdf
-from tm_mod_urdf._modify_urdf import urdf_DH_from_tm_DH
-from tm_mod_urdf._modify_urdf import xyzrpys_from_urdf_DH
+from tm_mod_urdf._modify_urdf import modify_urdf, urdf_DH_from_tm_DH, xyzrpys_from_urdf_DH
 from tm_msgs.srv import AskItem
 
 
-def _gen_urdf(args=None):
-    rclpy.init(args=args)
+def _gen_urdf() -> None:
+    rclpy.init()
     node = rclpy.create_node("modify_urdf")
 
     ###############################################################################################
@@ -33,7 +30,7 @@ def _gen_urdf(args=None):
     specific_w = ""
     # specific keyword default
     overwrite = False
-    nominal_model_restore = False
+    # nominal_model_restore = False
     tm5_900_nominal_restore = False
     tm5_700_nominal_restore = False
     tm12_nominal_restore = False
@@ -75,7 +72,8 @@ def _gen_urdf(args=None):
         node.get_logger().error("stop service, No AskItem service")
         return
 
-    # Notice !!! You must have finished to run the driver to connect to youur TM Robot before.
+    # Notice !!!
+    # You must have finished running the driver to connect to your TM Robot before.
     # [svr] (ask_item) -> id:dh (DHTable),id:dd (DeltaDH)
     req = AskItem.Request()
     req.wait_time = 1.0
@@ -112,24 +110,24 @@ def _gen_urdf(args=None):
     if nominal_model_restore is True:
         if tm5_900_nominal_restore is True:
             node.get_logger().info("Restore with TM5-900 nominal kinematics parameters")
-            res_dh = "DHTable={0,-90,0,145.2,0,-270,270,-90,0,429,0,0,-180,180,0,0,411.5,0,0,-155,155,90,90,0,-122.3,0,-180,180,0,90,0,106,0,-180,180,0,0,0,113.15,0,-270,270}"
+            res_dh = "DHTable={0,-90,0,145.2,0,-270,270,-90,0,429,0,0,-180,180,0,0,411.5,0,0,-155,155,90,90,0,-122.3,0,-180,180,0,90,0,106,0,-180,180,0,0,0,113.15,0,-270,270}"  # noqa: E501
             res_dd = "DeltaDH={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}"
         elif tm5_700_nominal_restore is True:
             node.get_logger().info("Restore with TM5-700 nominal kinematics parameters")
-            res_dh = "DHTable={0,-90,0,145.2,0,-270,270,-90,0,329,0,0,-180,180,0,0,311.5,0,0,-155,155,90,90,0,-122.3,0,-180,180,0,90,0,106,0,-180,180,0,0,0,113.15,0,-270,270}"
+            res_dh = "DHTable={0,-90,0,145.2,0,-270,270,-90,0,329,0,0,-180,180,0,0,311.5,0,0,-155,155,90,90,0,-122.3,0,-180,180,0,90,0,106,0,-180,180,0,0,0,113.15,0,-270,270}"  # noqa: E501
             res_dd = "DeltaDH={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}"
         elif tm12_nominal_restore is True:
             node.get_logger().info("Restore with TM12 nominal kinematics parameters")
-            res_dh = "DHTable={0,-90,0,165.2,0,-270,270,-90,0,636.1,0,0,-180,180,0,0,557.9,0,0,-166,166,90,90,0,-156.3,0,-180,180,0,90,0,106,0,-180,180,0,0,0,113.15,0,-270,270}"
+            res_dh = "DHTable={0,-90,0,165.2,0,-270,270,-90,0,636.1,0,0,-180,180,0,0,557.9,0,0,-166,166,90,90,0,-156.3,0,-180,180,0,90,0,106,0,-180,180,0,0,0,113.15,0,-270,270}"  # noqa: E501
             res_dd = "DeltaDH={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}"
         elif tm14_nominal_restore is True:
             node.get_logger().info("Restore with TM14 nominal kinematics parameters")
-            res_dh = "DHTable={0,-90,0,165.2,0,-270,270,-90,0,536.1,0,0,-180,180,0,0,457.9,0,0,-166,166,90,90,0,-156.3,0,-180,180,0,90,0,106,0,-180,180,0,0,0,113.15,0,-270,270}"
+            res_dh = "DHTable={0,-90,0,165.2,0,-270,270,-90,0,536.1,0,0,-180,180,0,0,457.9,0,0,-166,166,90,90,0,-156.3,0,-180,180,0,90,0,106,0,-180,180,0,0,0,113.15,0,-270,270}"  # noqa: E501
             res_dd = "DeltaDH={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}"
         else:
             # Example: TM5-900 nominal kinematics parameters
             node.get_logger().info("Restore with TM5-900 nominal kinematics parameters")
-            res_dh = "DHTable={0,-90,0,145.2,0,-270,270,-90,0,429,0,0,-180,180,0,0,411.5,0,0,-155,155,90,90,0,-122.3,0,-180,180,0,90,0,106,0,-180,180,0,0,0,113.15,0,-270,270}"
+            res_dh = "DHTable={0,-90,0,145.2,0,-270,270,-90,0,429,0,0,-180,180,0,0,411.5,0,0,-155,155,90,90,0,-122.3,0,-180,180,0,90,0,106,0,-180,180,0,0,0,113.15,0,-270,270}"  # noqa: E501
             res_dd = "DeltaDH={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}"
         node.get_logger().info(res_dh)
         node.get_logger().info(res_dd)
@@ -140,6 +138,7 @@ def _gen_urdf(args=None):
     if len(dh_strs) != 42:
         node.get_logger().error("stop service, invalid dh parameters")
         return
+
     if len(dd_strs) != 30:
         node.get_logger().error("stop service, invalid delta_dh parameters")
         return
@@ -160,9 +159,9 @@ def _gen_urdf(args=None):
         return
     src_path = curr_path[:ind] + "src"
     urdf_path = ""
-    for dirpath, dirnames, filenames in os.walk(src_path, followlinks=True):
-        if dirpath.endswith("tm_description"):
-            urdf_path = os.path.join(dirpath, "urdf")
+    for dir_path, _dir_names, _file_names in os.walk(src_path, followlinks=True):
+        if dir_path.endswith("tm_description"):
+            urdf_path = os.path.join(dir_path, "urdf")
             break
     if urdf_path == "":
         node.get_logger().error("urdf directory not found")
@@ -210,10 +209,12 @@ def _gen_urdf(args=None):
         node.get_logger().info(f"[new save file path:] {file_save}")
 
 
-def main(args=None):
+def main() -> None:
+    from rclpy.exceptions import ROSInterruptException
+
     try:
-        _gen_urdf(args)
-    except rclpy.exceptions.ROSInterruptException:
+        _gen_urdf()
+    except ROSInterruptException:
         pass
 
 

@@ -1,11 +1,11 @@
-#ifdef NO_INCLUDE_DIR
-#include "tm_print.h"
-#else
 #include "tm_driver/tm_print.h"
-#endif
 
+#include <array>
+#include <cstdarg>
+#include <cstdio>
 #include <iostream>
-#include <stdarg.h>
+#include <set>
+#include <string>
 
 #ifdef _WIN32
 #define vsnprintf_s vsprintf_s
@@ -13,161 +13,211 @@
 #define vsnprintf_s vsnprintf
 #endif
 
-#define MAX_MSG_SIZE 256
+enum
+{
+  MAX_MSG_SIZE = 1024
+};
 
-void (*print_debug_function)(const char* fmt);
-bool isSetPrintDebugFunction = false;
-void (*print_info_function)(const char* fmt);
-bool isSetPrintInfoFunction = false;
-void (*print_warn_function)(const char* fmt);
-bool isSetPrintWarnFunction = false;
-void (*print_error_function)(const char* fmt);
-bool isSetPrintErrorFunction = false;
-void (*print_fatal_function)(const char* fmt);
-bool isSetPrintFatalFunction = false;
-void (*print_once_function)(const char* fmt);
-bool isSetPrintOnceFunction = false;
-
+void (*print_debug_function)(const std::string& fmt);
+bool is_set_print_debug_function = false;
+void (*print_info_function)(const std::string& fmt);
+bool is_set_print_info_function = false;
+void (*print_warn_function)(const std::string& fmt);
+bool is_set_print_warn_function = false;
+void (*print_error_function)(const std::string& fmt);
+bool is_set_print_error_function = false;
+void (*print_fatal_function)(const std::string& fmt);
+bool is_set_print_fatal_function = false;
+void (*print_once_function)(const std::string& fmt);
+bool is_set_print_once_function = false;
 
 std::set<std::string> printed_string;
 
-bool isPrintDebugOnTerminal = true;
-void setup_print_debug(bool isPrintDebug){
-  isPrintDebugOnTerminal = isPrintDebug;
+bool is_print_debug_on_terminal = true;
+
+void setup_print_debug(bool is_printing_debug)
+{
+  is_print_debug_on_terminal = is_printing_debug;
 }
 
-void default_debug_function_print(const char* msg){
-  std::cout<<PRINT_CYAN<<"[DEBUG] "<<msg<<std::endl<<PRINT_RESET;
+void default_debug_function_print(const std::string& msg)
+{
+  std::cerr << PRINT_CYAN << "[DEBUG] " << msg << "\n" << PRINT_RESET;
 }
-void default_print_info_function_print(const char* msg){
-  std::cout<<"[INFO] "<<msg<<std::endl;
+
+void default_print_info_function_print(const std::string& msg)
+{
+  std::cout << "[INFO] " << msg << "\n";
 }
-void default_print_warn_function_print(const char* msg){
-  std::cout<<PRINT_YELLOW<<"[WARN] "<<msg<<std::endl<<PRINT_RESET;
+
+void default_print_warn_function_print(const std::string& msg)
+{
+  std::cerr << PRINT_YELLOW << "[WARN] " << msg << "\n" << PRINT_RESET;
 }
-void default_print_error_function_print(const char* msg){
-  std::cout<<PRINT_RED<<"[ERROR] "<<msg<<std::endl<<PRINT_RESET;
+
+void default_print_error_function_print(const std::string& msg)
+{
+  std::cerr << PRINT_RED << "[ERROR] " << msg << "\n" << PRINT_RESET;
 }
-void default_print_fatal_function_print(const char* msg){
-  std::cout<<PRINT_GREEN<<"[FATAL] "<<msg<<std::endl<<PRINT_RESET;
+
+void default_print_fatal_function_print(const std::string& msg)
+{
+  std::cerr << PRINT_GREEN << "[FATAL] " << msg << "\n" << PRINT_RESET;
 }
-void default_print_once_function_print(const char* msg){
-  std::string str(msg);
-  if (printed_string.count(str) == 0) {
-    std::cout<<"[INFO_ONCE] "<< str << std::endl;
-	printed_string.insert(str);
+
+void default_print_once_function_print(const std::string& msg)
+{
+  if (printed_string.count(msg) == 0)
+  {
+    std::cout << "[INFO_ONCE] " << msg << "\n";
+    printed_string.insert(msg);
   }
 }
-int print_debug(const char* fmt, ...) {
-  char msg[MAX_MSG_SIZE];
-  int n;
+
+int print_debug(const char* fmt, ...)
+{
+  std::array<char, MAX_MSG_SIZE> msg;
   va_list vl;
   va_start(vl, fmt);
-  n = vsnprintf_s(msg, MAX_MSG_SIZE, fmt, vl);
+  const int n = vsnprintf_s(msg.data(), MAX_MSG_SIZE, fmt, vl);
   va_end(vl);
-  
-  if(!isPrintDebugOnTerminal){
+  if (!is_print_debug_on_terminal)
+  {
     return n;
-  } else if(isSetPrintDebugFunction){
-    print_debug_function(msg);
-  } else{
-    default_debug_function_print(msg);
+  }
+  else if (is_set_print_debug_function)
+  {
+    print_debug_function(msg.data());
+  }
+  else
+  {
+    default_debug_function_print(msg.data());
   }
   return n;
 }
-int print_info(const char* fmt, ...) {
-	char msg[MAX_MSG_SIZE];
-	int n;
-	va_list vl;
-	va_start(vl, fmt);
-	n = vsnprintf_s(msg, MAX_MSG_SIZE, fmt, vl);
-	va_end(vl);
-    if(isSetPrintInfoFunction){
-        print_info_function(msg);
-    } else{
-        default_print_info_function_print(msg);
-    }
-	return n;
-}
-int print_warn(const char* fmt, ...) {
-	char msg[MAX_MSG_SIZE];
-	int n;
-	va_list vl;
-	va_start(vl, fmt);
-	n = vsnprintf_s(msg, MAX_MSG_SIZE, fmt, vl);
-	va_end(vl);
-    if(isSetPrintWarnFunction){
-		print_warn_function(msg);
-	} else{
-		default_print_warn_function_print(msg);
-	}
-	return n;
-}
-int print_error(const char* fmt, ...) {
-	char msg[MAX_MSG_SIZE];
-	int n;
-	va_list vl;
-	va_start(vl, fmt);
-	n = vsnprintf_s(msg, MAX_MSG_SIZE, fmt, vl);
-	va_end(vl);
-    if(isSetPrintErrorFunction){
-		print_error_function(msg);
-	} else{
-		default_print_error_function_print(msg);
-	}
-	return n;
-}
-int print_fatal(const char* fmt, ...) {
-	char msg[MAX_MSG_SIZE];
-	int n;
-	va_list vl;
-	va_start(vl, fmt);
-	n = vsnprintf_s(msg, MAX_MSG_SIZE, fmt, vl);
-	va_end(vl);
-    if(isSetPrintFatalFunction){
-		print_fatal_function(msg);
-	} else{
-		default_print_fatal_function_print(msg);
-	}
-	return n;
-}
-int print_once(const char* fmt, ...){
-	char msg[MAX_MSG_SIZE];
-	int n;
-	va_list vl;
-	va_start(vl, fmt);
-	n = vsnprintf_s(msg, MAX_MSG_SIZE, fmt, vl);
-	va_end(vl);
-    if(isSetPrintOnceFunction){
-		print_once_function(msg);
-	} else{
-		default_print_once_function_print(msg);
-	}
-	return n;
+
+int print_info(const char* fmt, ...)
+{
+  std::array<char, MAX_MSG_SIZE> msg;
+  va_list vl;
+  va_start(vl, fmt);
+  const int n = vsnprintf_s(msg.data(), MAX_MSG_SIZE, fmt, vl);
+  va_end(vl);
+  if (is_set_print_info_function)
+  {
+    print_info_function(msg.data());
+  }
+  else
+  {
+    default_print_info_function_print(msg.data());
+  }
+  return n;
 }
 
+int print_warn(const char* fmt, ...)
+{
+  std::array<char, MAX_MSG_SIZE> msg;
+  va_list vl;
+  va_start(vl, fmt);
+  const int n = vsnprintf_s(msg.data(), MAX_MSG_SIZE, fmt, vl);
+  va_end(vl);
+  if (is_set_print_warn_function)
+  {
+    print_warn_function(msg.data());
+  }
+  else
+  {
+    default_print_warn_function_print(msg.data());
+  }
+  return n;
+}
 
-void set_up_print_debug_function(void (*function_print)(const char* fmt)){
+int print_error(const char* fmt, ...)
+{
+  std::array<char, MAX_MSG_SIZE> msg;
+  va_list vl;
+  va_start(vl, fmt);
+  const int n = vsnprintf_s(msg.data(), MAX_MSG_SIZE, fmt, vl);
+  va_end(vl);
+  if (is_set_print_error_function)
+  {
+    print_error_function(msg.data());
+  }
+  else
+  {
+    default_print_error_function_print(msg.data());
+  }
+  return n;
+}
+
+int print_fatal(const char* fmt, ...)
+{
+  std::array<char, MAX_MSG_SIZE> msg;
+  va_list vl;
+  va_start(vl, fmt);
+  const int n = vsnprintf_s(msg.data(), MAX_MSG_SIZE, fmt, vl);
+  va_end(vl);
+  if (is_set_print_fatal_function)
+  {
+    print_fatal_function(msg.data());
+  }
+  else
+  {
+    default_print_fatal_function_print(msg.data());
+  }
+  return n;
+}
+
+int print_once(const char* fmt, ...)
+{
+  std::array<char, MAX_MSG_SIZE> msg;
+  va_list vl;
+  va_start(vl, fmt);
+  const int n = vsnprintf_s(msg.data(), MAX_MSG_SIZE, fmt, vl);
+  va_end(vl);
+  if (is_set_print_once_function)
+  {
+    print_once_function(msg.data());
+  }
+  else
+  {
+    default_print_once_function_print(msg.data());
+  }
+  return n;
+}
+
+void set_up_print_debug_function(void (*function_print)(const std::string& fmt))
+{
   print_debug_function = function_print;
-  isSetPrintDebugFunction = true;
+  is_set_print_debug_function = true;
 }
-void set_up_print_info_function(void (*function_print)(const char* fmt)){
+
+void set_up_print_info_function(void (*function_print)(const std::string& fmt))
+{
   print_info_function = function_print;
-  isSetPrintInfoFunction = true;
+  is_set_print_info_function = true;
 }
-void set_up_print_warn_function(void (*function_print)(const char* fmt)){
+
+void set_up_print_warn_function(void (*function_print)(const std::string& fmt))
+{
   print_warn_function = function_print;
-  isSetPrintWarnFunction = true;
+  is_set_print_warn_function = true;
 }
-void set_up_print_error_function(void (*function_print)(const char* fmt)){
+
+void set_up_print_error_function(void (*function_print)(const std::string& fmt))
+{
   print_error_function = function_print;
-  isSetPrintErrorFunction = true;
+  is_set_print_error_function = true;
 }
-void set_up_print_fatal_function(void (*function_print)(const char* fmt)){
+
+void set_up_print_fatal_function(void (*function_print)(const std::string& fmt))
+{
   print_fatal_function = function_print;
-  isSetPrintFatalFunction = true;
+  is_set_print_fatal_function = true;
 }
-void set_up_print_once_function(void (*function_print)(const char* fmt)){
+
+void set_up_print_once_function(void (*function_print)(const std::string& fmt))
+{
   print_once_function = function_print;
-  isSetPrintOnceFunction = true;
+  is_set_print_once_function = true;
 }

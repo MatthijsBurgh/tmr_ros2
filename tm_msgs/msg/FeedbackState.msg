@@ -15,18 +15,18 @@ int32 max_not_connect_in_s
 int32 disconnection_times
 
 # Movement
-float64[] joint_pos
-float64[] joint_vel
-float64[] joint_tor
-float64[] tool0_pose         # flange_pose
-float64[] tool_pose
-float64[] tcp_speed
-float64[] tcp_force
+float64[6] joint_pos
+float64[6] joint_vel
+float64[6] joint_tor
+float64[6] tool0_pose       # flange_pose
+float64[6] tool_pose
+float64[6] tcp_speed
+float64[3] tcp_force
 
 # Torque Data(for TM-Flow 1.84)
-float64[] joint_tor_average
-float64[] joint_tor_min
-float64[] joint_tor_max
+float64[6] joint_tor_average
+float64[6] joint_tor_min
+float64[6] joint_tor_max
 
 # Status
 bool robot_link              # Link Robot Controller
@@ -34,7 +34,7 @@ bool is_data_table_correct   # Data Table Setting is Correct
 bool robot_error             # Error or Not
 bool project_run             # Project Runing or not
 bool project_pause           # Project Pause or not
-bool safetyguard_a           # Safety IO(Safeguard Port A trigger) 
+bool safetyguard_a           # Safety IO(Safeguard Port A trigger)
 bool e_stop                  # Emergency STOP
 uint8 camera_light           # Light
 int32 error_code             # Last Error Code
@@ -43,15 +43,14 @@ int32 ma_mode                # M/A Mode
 int32 robot_light            # Robot light
 
 # IO
-uint8[] cb_digital_output
-uint8[] cb_digital_input
-float32[] cb_analog_output
-float32[] cb_analog_input
-uint8[] ee_digital_output
-uint8[] ee_digital_input
-float32[] ee_analog_output
-float32[] ee_analog_input
+bool[16] cb_digital_output
+bool[16] cb_digital_input
+float32[2] cb_analog_output
+float32[2] cb_analog_input
+bool[4] ee_digital_output
+bool[4] ee_digital_input
+float32[2] ee_analog_output
+float32[2] ee_analog_input
 
 # String
 string error_content
-

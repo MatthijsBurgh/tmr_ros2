@@ -1,10 +1,10 @@
 import math
 
 # from xml.etree import ElementTree
-# import xml.etree.cElementTree as ET
+import xml.etree.cElementTree as ET  # noqa: N812, N817
+from typing import List, Tuple
 
 import numpy as np
-
 
 # always print floating point numbers using fixed point notation
 # np.set_printoptions(suppress=True)
@@ -19,27 +19,27 @@ _LLIM = 5
 _ULIM = 6
 
 
-def is_rotation_matrix(R):
-    Rt = np.transpose(R)
-    shouldBeIdentity = np.dot(Rt, R)
-    Im = np.identity(3, dtype=R.dtype)
-    n = np.linalg.norm(Im - shouldBeIdentity)
+def is_rotation_matrix(R: np.ndarray) -> bool:  # noqa: N803
+    R_t = np.transpose(R)  # noqa: N806
+    should_be_identity = np.dot(R_t, R)
+    I = np.identity(3, dtype=R.dtype)  # noqa: E741, N806
+    n = np.linalg.norm(I - should_be_identity)
     return n < 1e-6
 
 
-def rot_x(x):
+def rot_x(x: float) -> np.ndarray:
     return np.array([[1, 0, 0], [0, math.cos(x), -math.sin(x)], [0, math.sin(x), math.cos(x)]])
 
 
-def rot_y(y):
+def rot_y(y: float) -> np.ndarray:
     return np.array([[math.cos(y), 0, math.sin(y)], [0, 1, 0], [-math.sin(y), 0, math.cos(y)]])
 
 
-def rot_z(z):
+def rot_z(z: float) -> np.ndarray:
     return np.array([[math.cos(z), -math.sin(z), 0], [math.sin(z), math.cos(z), 0], [0, 0, 1]])
 
 
-def T_a_alpha(a, alpha):
+def T_a_alpha(a: float, alpha: float) -> np.ndarray:  # noqa: N802
     return np.array(
         [
             [1, 0, 0, a],
@@ -50,13 +50,13 @@ def T_a_alpha(a, alpha):
     )
 
 
-def T_beta(beta):
+def T_beta(beta: float) -> np.ndarray:  # noqa: N802
     return np.array(
         [[math.cos(beta), 0, math.sin(beta), 0], [0, 1, 0, 0], [-math.sin(beta), 0, math.cos(beta), 0], [0, 0, 0, 1]]
     )
 
 
-def T_d_theta(d, theta):
+def T_d_theta(d: float, theta: float) -> np.ndarray:  # noqa: N802
     return np.array(
         [
             [math.cos(theta), -math.sin(theta), 0, 0],
@@ -68,16 +68,16 @@ def T_d_theta(d, theta):
 
 
 # Calculates Rotation Matrix given euler angles.
-def rotation_matrix_from_euler_angles(theta):
-    R_x = rot_x(theta[0])
-    R_y = rot_y(theta[1])
-    R_z = rot_z(theta[2])
+def rotation_matrix_from_euler_angles(theta: np.ndarray) -> np.ndarray:
+    R_x = rot_x(theta[0])  # noqa: N806
+    R_y = rot_y(theta[1])  # noqa: N806
+    R_z = rot_z(theta[2])  # noqa: N806
     return np.dot(R_z, np.dot(R_y, R_x))
     # return R_z @ R_y @ R_x
 
 
 # Calculates rotation matrix to euler angles
-def euler_angles_from_rotation_matrix(R):
+def euler_angles_from_rotation_matrix(R: np.ndarray) -> np.ndarray:  # noqa: N803
     assert is_rotation_matrix(R)
 
     sy = math.sqrt(R[0, 0] * R[0, 0] + R[1, 0] * R[1, 0])
@@ -98,10 +98,10 @@ def euler_angles_from_rotation_matrix(R):
 
 # URDF DH ((5+2) x 6) from TM DH Table (7x6) and Delta DH (5x6)
 # a-alpha-beta-d-theta <-- theta-alpha-a-d-t-l-u + delta(theta-alpha-a-d-beta)
-def urdf_DH_from_tm_DH(tm_DH, tm_DeltaDH):
+def urdf_DH_from_tm_DH(tm_DH: List[float], tm_DeltaDH: List[float]) -> np.ndarray:  # noqa: N802, N803
     assert len(tm_DH) == 7 * _DoF and len(tm_DeltaDH) == 5 * _DoF
 
-    urdf_DH = np.zeros([_DoF + 1, 7])
+    urdf_DH = np.zeros([_DoF + 1, 7])  # noqa: N806
     # urdf_DH[0, _A    ] = 0.
     # urdf_DH[0, _ALPHA] = 0.
     # urdf_DH[0, _BETA ] = 0.
@@ -118,15 +118,15 @@ def urdf_DH_from_tm_DH(tm_DH, tm_DeltaDH):
     return urdf_DH
 
 
-def xyzrpys_from_urdf_DH(udh):
+def xyzrpys_from_urdf_DH(udh: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:  # noqa: N802
     np.set_printoptions(suppress=True)
     xyzs = np.zeros([_DoF + 1, 3])
     rpys = np.zeros([_DoF + 1, 3])
     for i in range(_DoF + 1):
-        Ta = T_a_alpha(udh[i, _A], udh[i, _ALPHA])
-        Tb = T_beta(udh[i, _BETA])
-        Tc = T_d_theta(udh[i, _D], udh[i, _THETA])
-        T = np.dot(Ta, np.dot(Tb, Tc))
+        Ta = T_a_alpha(udh[i, _A], udh[i, _ALPHA])  # noqa: N806
+        Tb = T_beta(udh[i, _BETA])  # noqa: N806
+        Tc = T_d_theta(udh[i, _D], udh[i, _THETA])  # noqa: N806
+        T = np.dot(Ta, np.dot(Tb, Tc))  # noqa: N806
         # T = Ta @ Tb @ Tc
         # R = T[0:3, 0:3]
         xyzs[i] = T[0:3, 3]
@@ -140,7 +140,7 @@ def xyzrpys_from_urdf_DH(udh):
     return xyzs, rpys
 
 
-def str_from_nparray(nparray):
+def str_from_nparray(nparray: np.ndarray) -> str:
     string = ""
     for value in nparray:
         # string += str(value)
@@ -151,7 +151,7 @@ def str_from_nparray(nparray):
     return string
 
 
-def pretty_xml(element, indent, newline, level=0):
+def pretty_xml(element: ET.Element, indent: str, newline: str, level: int = 0) -> None:
     if element:
         if element.text is None or element.text.isspace():
             element.text = newline + indent * (level + 1)
@@ -167,7 +167,7 @@ def pretty_xml(element, indent, newline, level=0):
         pretty_xml(subelement, indent, newline, level=level + 1)
 
 
-def modify_urdf(root, xyzs, rpys, udh, prefix=""):
+def modify_urdf(root: ET.Element, xyzs: np.ndarray, rpys: np.ndarray, udh: np.ndarray, prefix: str = "") -> None:
     for elem in root.findall("joint"):
         for index in elem.attrib:
             if index == "name" and elem.attrib[index] == prefix + "base_fixed_joint":
