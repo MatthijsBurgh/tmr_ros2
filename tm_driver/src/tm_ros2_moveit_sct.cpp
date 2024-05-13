@@ -163,9 +163,8 @@ void TmRos2SctMoveit::execute_traj(
   if (!is_fake_)
   {
     iface_.run_pvt_traj(
-        *pvts,
-        ((100.0 / state_.project_speed()) * 0.95 + 0.55) *
-            pvts->total_time);  // Total time running is (0.95 * X + 0.55) * total_time, with X 100/project_speed
+        *pvts, ((100.0 / state_.project_speed()) * 0.95 + 0.55),
+        0.25);  // Total time running is (0.95 * X + 0.55) * total_time, with X 100/project_speed; with additional 0.25s margin
   }
   else
   {

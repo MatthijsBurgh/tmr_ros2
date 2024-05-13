@@ -216,10 +216,14 @@ bool TmDriver::set_pvt_traj(const TmPvtTraj& pvts, const std::string& id)
   return (sct.send_script_str(id, script) == RC_OK);
 }
 
-bool TmDriver::run_pvt_traj(const TmPvtTraj& pvts, double goal_time_tolerance)
+bool TmDriver::run_pvt_traj(const TmPvtTraj& pvts, double goal_duration_scaling, double goal_duration_margin)
 {
   print_info("pvts.total_time:= %.3f", pvts.total_time);
-  print_info("goal_time_tolerance:= %.3f", goal_time_tolerance);
+  print_info("goal_duration_scaling:= %.3f", goal_duration_scaling);
+  print_info("goal_duration_margin:= %.3f", goal_duration_margin);
+  const double total_time = pvts.total_time * goal_duration_scaling + goal_duration_margin;
+  print_info("Total allowed time (%.3f * %.3f + %.3f):= %.3f", pvts.total_time, goal_duration_scaling,
+             goal_duration_margin, total_time);
   auto time_start = std::chrono::steady_clock::now();
   auto time_now = time_start;
 
@@ -245,7 +249,7 @@ bool TmDriver::run_pvt_traj(const TmPvtTraj& pvts, double goal_time_tolerance)
   // wait
   double time = 0.0;
   double max_speed = 0.0;
-  while (is_exec_pvt_traj() && time < pvts.total_time + goal_time_tolerance)
+  while (is_exec_pvt_traj() && time < total_time)
   {
     max_speed = std::max<double>(max_speed, state.tcp_speed());
 
@@ -285,7 +289,10 @@ bool TmDriver::run_pvt_traj(const TmPvtTraj& pvts, double goal_time_tolerance)
     set_stop();
   }
   print_info("pvts.total_time:= %.3f", pvts.total_time);
-  print_info("goal_time_tolerance:= %.3f", goal_time_tolerance);
+  print_info("goal_duration_scaling:= %.3f", goal_duration_scaling);
+  print_info("goal_duration_margin:= %.3f", goal_duration_margin);
+  print_info("Total allowed time (%.3f * %.3f + %.3f):= %.3f", pvts.total_time, goal_duration_scaling,
+             goal_duration_margin, total_time);
   print_info("TM_DRV: traj. exec. time:= %.3f", time);
   print_info("Execution ratio:= %.3f", time / pvts.total_time);
   return succesfull;

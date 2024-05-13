@@ -112,7 +112,7 @@ public:
 
   bool set_pvt_traj(const TmPvtTraj& pvts, const std::string& id = "PvtTraj");
 
-  bool run_pvt_traj(const TmPvtTraj& pvts, double goal_time_tolerance = 0.0);
+  bool run_pvt_traj(const TmPvtTraj& pvts, double goal_duration_scaling = 1.1, double goal_duration_margin = 0.5);
 
   inline void start_pvt_traj()
   {
