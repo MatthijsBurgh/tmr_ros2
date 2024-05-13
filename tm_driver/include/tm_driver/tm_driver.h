@@ -19,8 +19,6 @@ private:
 
   std::condition_variable* svr_cv_ = nullptr;
   std::condition_variable* sct_cv_ = nullptr;
-  // bool has_svr_thrd_ = false;
-  // bool has_sct_thrd_ = false;
 
   bool is_executing_traj_ = false;
 

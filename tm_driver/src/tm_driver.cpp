@@ -27,12 +27,10 @@ TmDriver::TmDriver(const std::string& ip, std::condition_variable* psvr_cv, std:
   if (psvr_cv)
   {
     svr_cv_ = psvr_cv;
-    // has_svr_thrd_ = true;
   }
   if (psct_cv)
   {
     sct_cv_ = psct_cv;
-    // has_sct_thrd_ = true;
   }
 }
 
