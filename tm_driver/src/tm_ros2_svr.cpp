@@ -7,6 +7,7 @@
 
 #include <geometry_msgs/msg/pose_stamped.hpp>
 #include <rclcpp/node.hpp>
+#include <rclcpp/qos.hpp>
 #include <rclcpp/utilities.hpp>
 #include <tf2/LinearMath/Quaternion.h>
 #include <sensor_msgs/msg/joint_state.hpp>
@@ -31,9 +32,11 @@ const std::array<std::string, 6> TmSvrRos2::jns_ = {"joint_1", "joint_2", "joint
 TmSvrRos2::TmSvrRos2(const rclcpp::Node::SharedPtr& node, TmDriver& iface, bool is_fake, bool stick_play)
   : node(node), svr_(iface.svr), state_(iface.state), sct_(iface.sct), iface_(iface), is_fake(is_fake)
 {
-  pm_.fbs_pub = node->create_publisher<tm_msgs::msg::FeedbackState>("feedback_states", 1);
-  pm_.joint_pub = node->create_publisher<sensor_msgs::msg::JointState>("joint_states", 1);
-  pm_.tool_pose_pub = node->create_publisher<geometry_msgs::msg::PoseStamped>("tool_pose", 1);
+  rclcpp::QoS qos = rclcpp::SensorDataQoS();
+  qos.keep_last(1);
+  pm_.fbs_pub = node->create_publisher<tm_msgs::msg::FeedbackState>("feedback_states", qos);
+  pm_.joint_pub = node->create_publisher<sensor_msgs::msg::JointState>("joint_states", qos);
+  pm_.tool_pose_pub = node->create_publisher<geometry_msgs::msg::PoseStamped>("tool_pose", qos);
   if (!is_fake)
   {
     pm_.svr_pub = node->create_publisher<tm_msgs::msg::SvrResponse>("svr_response", 1);
