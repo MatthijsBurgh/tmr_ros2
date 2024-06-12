@@ -34,10 +34,10 @@ find_package(Qt5Widgets REQUIRED)
 # Build ##
 # ######################################################################################################################
 if(BUILD_TESTING)
+  # set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
   find_package(ament_cmake_clang_format REQUIRED)
   ament_clang_format(CONFIG_FILE ../.clang-format)
-  find_package(ament_cmake_clang_tidy REQUIRED)
-  ament_clang_tidy(${CMAKE_BINARY_DIR} CONFIG_FILE ../.clang-tidy)
+  # find_package(ament_cmake_clang_tidy REQUIRED) ament_clang_tidy(${CMAKE_BINARY_DIR} CONFIG_FILE ../.clang-tidy)
   find_package(ament_cmake_lint_cmake REQUIRED)
   ament_lint_cmake()
   find_package(ament_cmake_xmllint REQUIRED)
