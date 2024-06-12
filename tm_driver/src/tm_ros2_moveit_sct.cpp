@@ -137,14 +137,12 @@ void TmRos2SctMoveit::execute_traj(
     result->error_code = result->PATH_TOLERANCE_VIOLATED;
     // result->error_string = "Start point doesn't match current pose";
     std::stringstream ss;
-    ss << "Start point doesn't match current pose: "
-       << "\n";
+    ss << "Start point doesn't match current pose: \n";
     auto q_act = state_.joint_angle();
     auto& q_start = traj_points.front();
     for (size_t i = 0; i < q_start.positions.size(); ++i)
     {
-      ss << q_act[i] << " != " << q_start.positions[i] << " (" << q_start.positions[i] - q_act[i] << ")"
-         << "\n";
+      ss << q_act[i] << " != " << q_start.positions[i] << " (" << q_start.positions[i] - q_act[i] << ")\n";
     }
     result->error_string = ss.str();
     print_warn(result->error_string.c_str());
@@ -178,14 +176,12 @@ void TmRos2SctMoveit::execute_traj(
       result->error_code = result->GOAL_TOLERANCE_VIOLATED;
       // result->error_string = "Current pose doesn't match Goal point";;
       std::stringstream ss;
-      ss << "Current pose doesn't match goal point: "
-         << "\n";
+      ss << "Current pose doesn't match goal point: \n";
       const auto q_act = state_.joint_angle();
       const auto& q_end = traj_points[traj_points.size() - 1];
       for (size_t i = 0; i < q_end.positions.size(); ++i)
       {
-        ss << q_act[i] << " != " << q_end.positions[i] << " (" << q_end.positions[i] - q_act[i] << ")"
-           << "\n";
+        ss << q_act[i] << " != " << q_end.positions[i] << " (" << q_end.positions[i] - q_act[i] << ")\n";
       }
       result->error_string = ss.str();
       print_warn(result->error_string.c_str());
