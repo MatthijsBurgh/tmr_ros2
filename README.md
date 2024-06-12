@@ -21,12 +21,10 @@ or directly click the __TM ROS driver version__ listed in the table below.
 More information: TM ROS driver support list
 |ROS Distro (ROS Environment Setup)|TM ROS driver version|TM ROS Vision|Remark: switch GitHub branches|
 |:---|:---|:---:|:---:|
-|[__<font color=#808080ROS Noetic Ninjemys__](http://wiki.ros.org/noetic)|[__<font color=#0000FFTM ROS1 Noetic driver__](https://github.com/TechmanRobotInc/tmr_ros1/tree/noetic)|supported|noetic|
-|[__<font color=#808080ROS Melodic Morenia__](http://wiki.ros.org/melodic)|[__<font color=#0000FFTM ROS1 Melodic driver__](https://github.com/TechmanRobotInc/tmr_ros1/)|x|master|
-<!-- markdownlint-disable MD013 -->
-|[__<font color=#808080ROS 2 Foxy Fitzroy__](https://index.ros.org/doc/ros2/Releases/Release-Foxy-Fitzroy/)|[__<font color=#800000TM ROS2 Foxy driver__](https://github.com/MatthijsBurgh/tmr_ros2)|supported|master|
-<!-- markdownlint-disable MD013 -->
-|[__<font color=#808080ROS 2 Dashing Diademata__](https://index.ros.org/doc/ros2/Releases/Release-Dashing-Diademata/)|[__<font color=#800000TM ROS2 Dashing driver__](https://github.com/MatthijsBurgh/tmr_ros2/tree/dashing-devel)|supported|dashing-devel|
+|[__ROS Noetic Ninjemys__](http://wiki.ros.org/noetic)|[__ROS1 Noetic driver__](https://github.com/TechmanRobotInc/tmr_ros1/tree/noetic)|supported|noetic|
+|[__ROS Melodic Morenia__](http://wiki.ros.org/melodic)|[__ROS1 Melodic driver__](https://github.com/TechmanRobotInc/tmr_ros1/)|x|master|
+|[__ROS 2 Foxy Fitzroy__](https://index.ros.org/doc/ros2/Releases/Release-Foxy-Fitzroy/)|[__TM ROS2 Foxy driver__](https://github.com/MatthijsBurgh/tmr_ros2)|supported|master|
+|[__ROS 2 Dashing Diademata__](https://index.ros.org/doc/ros2/Releases/Release-Dashing-Diademata/)|[__TM ROS2 Dashing driver__](https://github.com/MatthijsBurgh/tmr_ros2/tree/dashing-devel)|supported|dashing-devel|
 
 Note1: The two current master branches are ROS1 Melodic and ROS2 Foxy.
 
