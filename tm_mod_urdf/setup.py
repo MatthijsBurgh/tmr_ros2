@@ -21,6 +21,6 @@ setup(
         "console_scripts": [
             "modify_urdf = tm_mod_urdf.modify_urdf:main",
             "modify_xacro = tm_mod_urdf.modify_xacro:main",
-        ],
+        ]
     },
 )

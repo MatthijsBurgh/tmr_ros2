@@ -10,18 +10,18 @@
     joint_4_lower_limit:=${radians(-180)}    joint_4_upper_limit:=${radians(180)}
     joint_5_lower_limit:=${radians(-180)}    joint_5_upper_limit:=${radians(180)}
     joint_6_lower_limit:=${radians(-270)}    joint_6_upper_limit:=${radians(270)}
-    joint_1_velocity_limit:=${radians(120)}    
+    joint_1_velocity_limit:=${radians(120)}
     joint_2_velocity_limit:=${radians(120)}
-    joint_3_velocity_limit:=${radians(180)}    
+    joint_3_velocity_limit:=${radians(180)}
     joint_4_velocity_limit:=${radians(180)}
-    joint_5_velocity_limit:=${radians(180)}    
+    joint_5_velocity_limit:=${radians(180)}
     joint_6_velocity_limit:=${radians(180)}
-    joint_1_effort_limit:=${353}    
+    joint_1_effort_limit:=${353}
     joint_2_effort_limit:=${353}
-    joint_3_effort_limit:=${157}    
+    joint_3_effort_limit:=${157}
     joint_4_effort_limit:=${54}
-    joint_5_effort_limit:=${54}    
-    joint_6_effort_limit:=${54}   
+    joint_5_effort_limit:=${54}
+    joint_6_effort_limit:=${54}
     safety_limits:=false safety_pos_margin:=0.15
     safety_k_position:=20">
 
@@ -40,7 +40,7 @@
    <xacro:property name="f4" value="${friction_factor*0.1}"/>
    <xacro:property name="f5" value="${friction_factor*0.1}"/>
    <xacro:property name="f6" value="${friction_factor*0.1}"/>
-      
+
     <!-- Inertia parameters -->
     <xacro:property name="mass_0" value="1.0" />
     <xacro:property name="mass_1" value="7.6" />
@@ -64,7 +64,7 @@
     <xacro:property name="iyy_4" value="${2563.079*unit_factor}" />
     <xacro:property name="iyy_5" value="${2563.079*unit_factor}" />
     <xacro:property name="iyy_6" value="${1383.811*unit_factor}" />
-    
+
     <xacro:property name="izz_1" value="${21396.271*unit_factor}" />
     <xacro:property name="izz_2" value="${1203393.300*unit_factor}" />
     <xacro:property name="izz_3" value="${166566.78*unit_factor}" />

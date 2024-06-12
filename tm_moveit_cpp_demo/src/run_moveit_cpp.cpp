@@ -1,7 +1,7 @@
 /*********************************************************************
  *  run_moveit_cpp.cpp
- * 
- *  Various portions of the code are based on original source from 
+ *
+ *  Various portions of the code are based on original source from
  *  PickNik Inc.
  *  and are used in accordance with the following license. */
 /*********************************************************************
@@ -65,7 +65,8 @@ public:
   {
     RCLCPP_INFO(LOGGER, "Initialize MoveItCpp");
     moveit_cpp_ = std::make_shared<moveit_cpp::MoveItCpp>(node_);
-    moveit_cpp_->getPlanningSceneMonitorNonConst()->providePlanningSceneService();  // let RViz display query PlanningScene
+    moveit_cpp_->getPlanningSceneMonitorNonConst()
+        ->providePlanningSceneService();  // let RViz display query PlanningScene
     moveit_cpp_->getPlanningSceneMonitorNonConst()->setPlanningScenePublishingFrequency(100);
 
     RCLCPP_INFO(LOGGER, "Initialize PlanningComponent");
@@ -81,7 +82,7 @@ public:
 
     shape_msgs::msg::SolidPrimitive box;
     box.type = box.BOX;
-    box.dimensions = { 0.1, 0.2, 0.1 };
+    box.dimensions = {0.1, 0.2, 0.1};
 
     geometry_msgs::msg::Pose box_pose;
     box_pose.position.x = 0.7;
@@ -119,7 +120,7 @@ public:
 #endif
     }
 
-    //Below, we simply use a long delay to wait for the previous motion to complete.
+    // Below, we simply use a long delay to wait for the previous motion to complete.
     rclcpp::sleep_for(std::chrono::seconds(10));
 
     // Set joint start state to current
