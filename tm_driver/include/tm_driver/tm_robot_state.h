@@ -241,7 +241,7 @@ public:
 
   std::array<bool, 16> ctrller_DO() const
   {
-    std::array<bool, 16> ctrllerDO;
+    std::array<bool, 16> ctrllerDO{};
     std::copy(tmRobotStateDataToPublish.ctrller_DO.begin(), tmRobotStateDataToPublish.ctrller_DO.end(),
               ctrllerDO.begin());
     return ctrllerDO;
@@ -249,7 +249,7 @@ public:
 
   std::array<bool, 16> ctrller_DI() const
   {
-    std::array<bool, 16> ctrllerDI;
+    std::array<bool, 16> ctrllerDI{};
     std::copy(tmRobotStateDataToPublish.ctrller_DI.begin(), tmRobotStateDataToPublish.ctrller_DI.end(),
               ctrllerDI.begin());
     return ctrllerDI;
@@ -257,7 +257,7 @@ public:
 
   std::array<float, 2> ctrller_AO() const
   {
-    std::array<float, 2> ctrllerAO;
+    std::array<float, 2> ctrllerAO{};
     std::copy(tmRobotStateDataToPublish.ctrller_AO.begin(), tmRobotStateDataToPublish.ctrller_AO.end(),
               ctrllerAO.begin());
     return ctrllerAO;
@@ -265,7 +265,7 @@ public:
 
   std::array<float, 2> ctrller_AI() const
   {
-    std::array<float, 2> ctrllerAI;
+    std::array<float, 2> ctrllerAI{};
     std::copy(tmRobotStateDataToPublish.ctrller_AI.begin(), tmRobotStateDataToPublish.ctrller_AI.end(),
               ctrllerAI.begin());
     return ctrllerAI;
@@ -273,28 +273,28 @@ public:
 
   std::array<bool, 4> ee_DO() const
   {
-    std::array<bool, 4> eeDO;
+    std::array<bool, 4> eeDO{};
     std::copy(tmRobotStateDataToPublish.ee_DO.begin(), tmRobotStateDataToPublish.ee_DO.end(), eeDO.begin());
     return eeDO;
   }
 
   std::array<bool, 4> ee_DI() const
   {
-    std::array<bool, 4> eeDI;
+    std::array<bool, 4> eeDI{};
     std::copy(tmRobotStateDataToPublish.ee_DI.begin(), tmRobotStateDataToPublish.ee_DI.end(), eeDI.begin());
     return eeDI;
   }
 
   std::array<float, 2> ee_AO()
   {
-    std::array<float, 2> eeAO;
+    std::array<float, 2> eeAO{};
     std::copy(tmRobotStateDataToPublish.ee_AO.begin(), tmRobotStateDataToPublish.ee_AO.end(), eeAO.begin());
     return eeAO;
   }
 
   std::array<float, 2> ee_AI() const
   {
-    std::array<float, 2> eeAI;
+    std::array<float, 2> eeAI{};
     std::copy(tmRobotStateDataToPublish.ee_AI.begin(), tmRobotStateDataToPublish.ee_AI.end(), eeAI.begin());
     return eeAI;
   }
