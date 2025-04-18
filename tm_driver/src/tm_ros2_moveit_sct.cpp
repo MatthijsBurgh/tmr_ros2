@@ -298,20 +298,10 @@ void TmRos2SctMoveit::set_pvt_traj(TmPvtTraj& pvts,
 
   pvts.mode = TmPvtMode::Joint;
 
-  size_t i = 0, i_1 = 0, i_2 = 0;
+  // Skip the first point as it is the current position and is not accepted by the robot
+  size_t i = 1, i_1 = 1, i_2 = 1;
   int skip_count = 0;
   TmPvtPoint point;
-
-  // first point
-  if (sec(traj_points[i].time_from_start) >= 1e-6)
-  {
-    print_warn("TM_ROS: Traj.: first point should be the current position, with time_from_start set to 0.0");
-  }
-  point.time = sec(traj_points[i].time_from_start);
-  // Assuming the traj_point positions and velocities are of length 6
-  std::copy(traj_points[i].positions.begin(), traj_points[i].positions.end(), point.positions.begin());
-  std::copy(traj_points[i].velocities.begin(), traj_points[i].velocities.end(), point.velocities.begin());
-  pvts.points.push_back(point);
 
   for (i = 1; i < traj_points.size() - 1; ++i)
   {
