@@ -204,7 +204,7 @@ def _gen_xacro() -> None:
 
     # find xacro path
     curr_path = Path(__file__).absolute().parent
-    dirs = ["src", "install"]
+    dirs = ["src", "install", "build"]
     idx = -1
     for d in dirs:
         try:
