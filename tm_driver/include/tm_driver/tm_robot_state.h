@@ -13,14 +13,14 @@
 
 struct TmRobotStateData
 {
-  unsigned char is_linked;
-  unsigned char has_error;
-  unsigned char is_proj_running;
-  unsigned char is_proj_paused;
-  unsigned char is_safeguard_A_triggered;
-  unsigned char is_ESTOP_pressed;
+  unsigned char is_linked = false;
+  unsigned char has_error = false;
+  unsigned char is_proj_running = false;
+  unsigned char is_proj_paused = false;
+  unsigned char is_safeguard_A_triggered = false;
+  unsigned char is_ESTOP_pressed = false;
   unsigned char camera_light;
-  int error_code;
+  int error_code = 0;
   std::array<float, 6> joint_angle;
   std::array<float, 6> flange_pose;
   std::array<float, 6> tool_pose;
@@ -36,8 +36,8 @@ struct TmRobotStateData
   std::array<float, 6> joint_torque_average;
   std::array<float, 6> joint_torque_min;
   std::array<float, 6> joint_torque_max;
-  int proj_speed;
-  int ma_mode;
+  int proj_speed = 100;
+  int ma_mode = 1;
   char stick_play_pause;
   int robot_light;
   std::array<unsigned char, 16> ctrller_DO;
