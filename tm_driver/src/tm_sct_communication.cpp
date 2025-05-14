@@ -70,7 +70,7 @@ void TmSctCommunication::halt()
 
 void TmSctCommunication::check_script_is_exit(const std::string& script)
 {
-  static const std::string COMPARE_STRING = "ScriptExit()";
+  static const std::string COMPARE_STRING = "Exit()";
   if (COMPARE_STRING.compare(script) == 0)
   {
     is_on_listen_node_ = false;
@@ -94,7 +94,7 @@ TmCommRC TmSctCommunication::send_script_str_silent(const std::string& id, const
 
 TmCommRC TmSctCommunication::send_script_exit()
 {
-  return send_script_str("Exit", "ScriptExit()");
+  return send_script_str("Exit", "Exit()");
 }
 
 TmCommRC TmSctCommunication::send_sta_request(const std::string& subcmd, const std::string& subdata)

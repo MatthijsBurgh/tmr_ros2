@@ -80,7 +80,7 @@ std::array<double, 6> m_rad_pose(const std::array<double, 6>& pose);
   More Detail please refer to the TM_Robot_Expression.pdf Chapter 8.2 */
 inline std::string script_exit()
 {
-  return "ScriptExit()";
+  return "Exit()";
 }
 
 // More details please refer to the TM_Robot_Expression.pdf Chapter 9.1
