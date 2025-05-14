@@ -93,6 +93,16 @@ void TmSvrRos2::publish_fbs()
 {
   PubMsg& pm = pm_;
   TmRobotState& state = state_;
+  bool fbs_lock = false; /* MC-001: modify */
+
+  // Modifications based on suggestions from Collaborators (remark as MC-list)
+  /* MC-001:start */
+  if (state.get_receive_state() != TmCommRC::TIMEOUT)
+  {
+    fbs_lock = true;
+    state.mtx_lock();
+  }
+  /* MC-001:end */
 
   // Publish feedback state
   pm.fbs_msg.header.stamp = node->rclcpp::Node::now();
@@ -155,6 +165,15 @@ void TmSvrRos2::publish_fbs()
   pm.fbs_msg.joint_tor_average = state.joint_torque_average();
   pm.fbs_msg.joint_tor_min = state.joint_torque_min();
   pm.fbs_msg.joint_tor_max = state.joint_torque_max();
+
+  /* MC-001:start */
+  if (fbs_lock)
+  {
+    state.mtx_unlock();
+    fbs_lock = false;
+  }
+  /* MC-001:end */
+
   pm.fbs_pub->publish(pm.fbs_msg);
 
   // Publish joint state

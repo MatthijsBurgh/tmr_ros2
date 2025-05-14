@@ -248,7 +248,7 @@ bool ListenNodeConnection::connect_tmsct(int timeout, int timeval, bool connect,
 
 bool ListenNodeConnection::send_listen_node_script(const std::string& id, const std::string& script)
 {
-  return (sct_.send_script_str(id, script) == iface.RC_OK);
+  return (sct_.send_script_str(id, script) == TmCommRC::OK);
 }
 
 bool ListenNodeConnection::ask_sta_struct(const std::string& subcmd, const std::string& subdata, double waitTime,
@@ -260,7 +260,7 @@ bool ListenNodeConnection::ask_sta_struct(const std::string& subcmd, const std::
   sta_updated_ = false;
   sta_mtx_.unlock();
 
-  rb = (sct_.send_sta_request(subcmd, subdata) == iface.RC_OK);
+  rb = (sct_.send_sta_request(subcmd, subdata) == TmCommRC::OK);
 
   {
     std::unique_lock<std::mutex> lck(sta_mtx_);

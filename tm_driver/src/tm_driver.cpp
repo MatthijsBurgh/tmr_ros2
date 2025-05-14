@@ -112,37 +112,37 @@ void TmDriver::back_to_listen_node()
 
 bool TmDriver::script_exit(const std::string& id)
 {
-  return (sct.send_script_str(id, tm_command::script_exit()) == RC_OK);
+  return (sct.send_script_str(id, tm_command::script_exit()) == TmCommRC::OK);
 }
 
 bool TmDriver::set_tag(int tag, int wait, const std::string& id)
 {
-  return (sct.send_script_str(id, tm_command::set_tag(tag, wait)) == RC_OK);
+  return (sct.send_script_str(id, tm_command::set_tag(tag, wait)) == TmCommRC::OK);
 }
 
 bool TmDriver::set_wait_tag(int tag, int timeout_ms, const std::string& id)
 {
-  return (sct.send_script_str(id, tm_command::set_wait_tag(tag, timeout_ms)) == RC_OK);
+  return (sct.send_script_str(id, tm_command::set_wait_tag(tag, timeout_ms)) == TmCommRC::OK);
 }
 
 bool TmDriver::set_stop(const std::string& id)
 {
-  return (sct.send_script_str(id, tm_command::set_stop()) == RC_OK);
+  return (sct.send_script_str(id, tm_command::set_stop()) == TmCommRC::OK);
 }
 
 bool TmDriver::set_pause(const std::string& id)
 {
-  return (sct.send_script_str(id, tm_command::set_pause()) == RC_OK);
+  return (sct.send_script_str(id, tm_command::set_pause()) == TmCommRC::OK);
 }
 
 bool TmDriver::set_resume(const std::string& id)
 {
-  return (sct.send_script_str(id, tm_command::set_resume()) == RC_OK);
+  return (sct.send_script_str(id, tm_command::set_resume()) == TmCommRC::OK);
 }
 
 bool TmDriver::set_io(TmIOModule module, TmIOType type, int pin, float state, const std::string& id)
 {
-  return (sct.send_script_str(id, tm_command::set_io(module, type, pin, state)) == RC_OK);
+  return (sct.send_script_str(id, tm_command::set_io(module, type, pin, state)) == TmCommRC::OK);
 }
 
 bool TmDriver::set_joint_pos_PTP(const std::array<double, 6>& angs, double vel, double acc_time, int blend_percent,
@@ -152,7 +152,7 @@ bool TmDriver::set_joint_pos_PTP(const std::array<double, 6>& angs, double vel, 
   if (vel_pa >= 100)
     vel_pa = 100;  // max 100%
   return (sct.send_script_str(id, tm_command::set_joint_pos_PTP(angs, vel_pa, acc_time, blend_percent, fine_goal)) ==
-          RC_OK);
+          TmCommRC::OK);
 }
 
 bool TmDriver::set_tool_pose_PTP(const std::array<double, 6>& pose, double vel, double acc_time, int blend_percent,
@@ -160,24 +160,24 @@ bool TmDriver::set_tool_pose_PTP(const std::array<double, 6>& pose, double vel, 
 {
   const int vel_pa = int(100.0 * (vel / max_velocity_));
   return (sct.send_script_str(id, tm_command::set_tool_pose_PTP(pose, vel_pa, acc_time, blend_percent, fine_goal)) ==
-          RC_OK);
+          TmCommRC::OK);
 }
 
 bool TmDriver::set_tool_pose_Line(const std::array<double, 6>& pose, double vel, double acc_time, int blend_percent,
                                   bool fine_goal, const std::string& id)
 {
   return (sct.send_script_str(id, tm_command::set_tool_pose_Line(pose, vel, acc_time, blend_percent, fine_goal)) ==
-          RC_OK);
+          TmCommRC::OK);
 }
 
 bool TmDriver::set_pvt_enter(TmPvtMode mode, const std::string& id)
 {
-  return (sct.send_script_str(id, tm_command::set_pvt_enter(int(mode))) == RC_OK);
+  return (sct.send_script_str(id, tm_command::set_pvt_enter(int(mode))) == TmCommRC::OK);
 }
 
 bool TmDriver::set_pvt_exit(const std::string& id)
 {
-  return (sct.send_script_str(id, tm_command::set_pvt_exit()) == RC_OK);
+  return (sct.send_script_str(id, tm_command::set_pvt_exit()) == TmCommRC::OK);
 }
 
 bool TmDriver::set_pvt_point(TmPvtMode mode, double t, const std::array<double, 6>& pos,
@@ -186,12 +186,12 @@ bool TmDriver::set_pvt_point(TmPvtMode mode, double t, const std::array<double, 
   if (t < 0.0 || pos.size() != vel.size() || pos.size() < 6)
     return false;
 
-  return (sct.send_script_str(id, tm_command::set_pvt_point(mode, t, pos, vel)) == RC_OK);
+  return (sct.send_script_str(id, tm_command::set_pvt_point(mode, t, pos, vel)) == TmCommRC::OK);
 }
 
 bool TmDriver::set_pvt_point(TmPvtMode mode, const TmPvtPoint& point, const std::string& id)
 {
-  return (sct.send_script_str(id, tm_command::set_pvt_point(mode, point)) == RC_OK);
+  return (sct.send_script_str(id, tm_command::set_pvt_point(mode, point)) == TmCommRC::OK);
 }
 
 bool TmDriver::set_pvt_traj(const TmPvtTraj& pvts, const std::string& id)
@@ -211,7 +211,7 @@ bool TmDriver::set_pvt_traj(const TmPvtTraj& pvts, const std::string& id)
     script_copy.erase(0, pos + DELIMITER.length());
   }
 
-  return (sct.send_script_str(id, script) == RC_OK);
+  return (sct.send_script_str(id, script) == TmCommRC::OK);
 }
 
 bool TmDriver::run_pvt_traj(const TmPvtTraj& pvts, double goal_duration_scaling, double goal_duration_margin)
@@ -387,15 +387,15 @@ bool TmDriver::fake_run_pvt_traj(const TmPvtTraj& pvts)
 
 bool TmDriver::set_vel_mode_start(VelMode mode, double timeout_zero_vel, double timeout_stop, const std::string& id)
 {
-  return (sct.send_script_str(id, tm_command::set_vel_mode_start(mode, timeout_zero_vel, timeout_stop)) == RC_OK);
+  return (sct.send_script_str(id, tm_command::set_vel_mode_start(mode, timeout_zero_vel, timeout_stop)) == TmCommRC::OK);
 }
 
 bool TmDriver::set_vel_mode_stop(const std::string& id)
 {
-  return (sct.send_script_str(id, tm_command::set_vel_mode_stop()) == RC_OK);
+  return (sct.send_script_str(id, tm_command::set_vel_mode_stop()) == TmCommRC::OK);
 }
 
 bool TmDriver::set_vel_mode_target(VelMode mode, const std::array<double, 6>& vel, const std::string& id)
 {
-  return (sct.send_script_str_silent(id, tm_command::set_vel_mode_target(mode, vel)) == RC_OK);
+  return (sct.send_script_str_silent(id, tm_command::set_vel_mode_target(mode, vel)) == TmCommRC::OK);
 }
