@@ -12,8 +12,6 @@ public:
   TmSctCommunication sct;
   TmRobotState& state;
 
-  const TmCommRC RC_OK = TmCommRC::OK;
-
 private:
   bool is_positions_match(const TmPvtPoint& point, double eps) const;
 

@@ -43,7 +43,7 @@ public:
   uint64_t notConnectTimeInS = 0;
   int maxTrialTimeInMinute = -1;
   uint64_t maxNotConnectTimeInS = 0;
-  int publishTimeMs = 15;
+  int publishTimeMs = 10;
   bool svr_updated_;
   std::mutex svr_mtx_;
   std::condition_variable svr_cv_;

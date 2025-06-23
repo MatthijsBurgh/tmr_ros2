@@ -57,7 +57,7 @@ int main(int argc, char** argv)
   const rclcpp::Client<tm_msgs::srv::SendScript>::SharedPtr client =
       node->create_client<tm_msgs::srv::SendScript>("send_script");
 
-  std::string cmd = "ScriptExit()";
+  std::string cmd = "Exit()";
 
   send_cmd(cmd, node, client);
 

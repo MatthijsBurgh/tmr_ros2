@@ -299,7 +299,7 @@ void TmRos2SctMoveit::set_pvt_traj(TmPvtTraj& pvts,
   pvts.mode = TmPvtMode::Joint;
 
   // Skip the first point as it is the current position and is not accepted by the robot
-  size_t i = 1, i_1 = 1, i_2 = 1;
+  size_t i = 1, i_1 = 0, i_2 = 0;
   int skip_count = 0;
   TmPvtPoint point;
 
