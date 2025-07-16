@@ -3,6 +3,8 @@
 #include "tm_sct_communication.h"
 #include "tm_command.h"
 
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include <string>
 
 class TmDriver
