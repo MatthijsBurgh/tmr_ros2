@@ -38,19 +38,13 @@ public:
     tm_msgs::msg::SvrResponse svr_msg;
   } pm_;
 
-  int diconnectTimes = 0;
-  uint64_t initialNotConnectTime = 0;
-  uint64_t notConnectTimeInS = 0;
-  int maxTrialTimeInMinute = -1;
+  int disconnectTimes = 0;
   uint64_t maxNotConnectTimeInS = 0;
   int publishTimeMs = 10;
   bool svr_updated_;
   std::mutex svr_mtx_;
   std::condition_variable svr_cv_;
 
-  int pub_reconnect_timeout_ms_;
-  int pub_reconnect_timeval_ms_;
-  std::thread pub_thread_;
   std::thread getDataThread;
 
   std::unique_ptr<EthernetSlaveConnection> ethernetSlaveConnection;
@@ -62,7 +56,7 @@ public:
   rclcpp::Service<tm_msgs::srv::WriteItem>::SharedPtr write_item_srv_;
   rclcpp::Service<tm_msgs::srv::AskItem>::SharedPtr ask_item_srv_;
   static const std::array<std::string, 6> jns_;
-  bool is_fake;
+  bool is_fake_;
 
 public:
   explicit TmSvrRos2(const rclcpp::Node::SharedPtr& node, TmDriver& iface, bool is_fake, bool stick_play = false,

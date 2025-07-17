@@ -30,12 +30,12 @@ const std::array<std::string, 6> TmSvrRos2::jns_ = {"joint_1", "joint_2", "joint
 
 TmSvrRos2::TmSvrRos2(const rclcpp::Node::SharedPtr& node, TmDriver& iface, bool is_fake, bool stick_play,
                      std::array<double, 6> fake_joint_state)
-  : node(node), svr_(iface.svr), state_(iface.state), sct_(iface.sct), iface_(iface), is_fake(is_fake)
+  : node(node), svr_(iface.svr), state_(iface.state), sct_(iface.sct), iface_(iface), is_fake_(is_fake)
 {
   pm_.fbs_pub = node->create_publisher<tm_msgs::msg::FeedbackState>("feedback_states", 1);
   pm_.joint_pub = node->create_publisher<sensor_msgs::msg::JointState>("joint_states", 1);
   pm_.tool_pose_pub = node->create_publisher<geometry_msgs::msg::PoseStamped>("tool_pose", 1);
-  if (!is_fake)
+  if (!is_fake_)
   {
     pm_.svr_pub = node->create_publisher<tm_msgs::msg::SvrResponse>("svr_response", 1);
   }
@@ -47,7 +47,7 @@ TmSvrRos2::TmSvrRos2(const rclcpp::Node::SharedPtr& node, TmDriver& iface, bool 
 
   svr_updated_ = false;
 
-  if (!is_fake)
+  if (!is_fake_)
   {
     ethernetSlaveConnection =
         std::make_unique<EthernetSlaveConnection>(iface, std::bind(&TmSvrRos2::publish_svr, this), stick_play);
@@ -85,9 +85,6 @@ TmSvrRos2::~TmSvrRos2()
   print_info("TM_ROS: (Ethernet slave) halt");
   svr_updated_ = true;
   svr_cv_.notify_all();
-
-  if (is_fake)
-    return;
 }
 
 void TmSvrRos2::publish_fbs()
@@ -131,7 +128,7 @@ void TmSvrRos2::publish_fbs()
   }
 
   pm.fbs_msg.max_not_connect_in_s = maxNotConnectTimeInS;
-  pm.fbs_msg.disconnection_times = diconnectTimes;
+  pm.fbs_msg.disconnection_times = disconnectTimes;
 
   pm.fbs_msg.is_data_table_correct = state.is_data_table_correct();
   pm.fbs_msg.joint_pos = state.joint_angle();
