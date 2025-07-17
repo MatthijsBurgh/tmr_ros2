@@ -8,7 +8,7 @@
 #include <geometry_msgs/msg/pose_stamped.hpp>
 #include <rclcpp/node.hpp>
 #include <rclcpp/utilities.hpp>
-#include <tf2/LinearMath/Quaternion.h>
+#include <tf2/LinearMath/Quaternion.hpp>
 #include <sensor_msgs/msg/joint_state.hpp>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
 #include <tm_msgs/msg/feedback_state.hpp>
