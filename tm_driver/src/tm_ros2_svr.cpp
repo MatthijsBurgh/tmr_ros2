@@ -28,7 +28,8 @@
 
 const std::array<std::string, 6> TmSvrRos2::jns_ = {"joint_1", "joint_2", "joint_3", "joint_4", "joint_5", "joint_6"};
 
-TmSvrRos2::TmSvrRos2(const rclcpp::Node::SharedPtr& node, TmDriver& iface, bool is_fake, bool stick_play)
+TmSvrRos2::TmSvrRos2(const rclcpp::Node::SharedPtr& node, TmDriver& iface, bool is_fake, bool stick_play,
+                     std::array<double, 6> fake_joint_state)
   : node(node), svr_(iface.svr), state_(iface.state), sct_(iface.sct), iface_(iface), is_fake(is_fake)
 {
   pm_.fbs_pub = node->create_publisher<tm_msgs::msg::FeedbackState>("feedback_states", 1);
@@ -66,7 +67,7 @@ TmSvrRos2::TmSvrRos2(const rclcpp::Node::SharedPtr& node, TmDriver& iface, bool 
   else
   {
     const std::array<double, 6> zeros = {0};
-    state_.set_fake_joint_states(zeros, zeros, zeros);
+    state_.set_fake_joint_states(fake_joint_state, zeros, zeros);
     pubDataTimer =
         node->create_wall_timer(std::chrono::milliseconds(publishTimeMs), std::bind(&TmSvrRos2::pub_data, this));
 

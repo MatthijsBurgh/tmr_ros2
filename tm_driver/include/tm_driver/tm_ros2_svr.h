@@ -65,7 +65,8 @@ public:
   bool is_fake;
 
 public:
-  explicit TmSvrRos2(const rclcpp::Node::SharedPtr& node, TmDriver& iface, bool is_fake, bool stick_play = false);
+  explicit TmSvrRos2(const rclcpp::Node::SharedPtr& node, TmDriver& iface, bool is_fake, bool stick_play = false,
+                     std::array<double, 6> fake_joint_state = {0});
   ~TmSvrRos2();
 
 protected:

@@ -8,6 +8,8 @@
 #include <rclcpp/logging.hpp>
 #include <rclcpp/utilities.hpp>
 
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include <cstdio>
 #include <iostream>
 #include <memory>
@@ -98,36 +100,50 @@ int main(int argc, char* argv[])
   set_up_ros_print_fuction();
 
   std::vector<std::string> args = rclcpp::init_and_remove_ros_arguments(argc, argv);
-
-  if (args.size() < 2)
-  {
-    ros_fatal_print("Please provide the 'robot_ip_address'");
-    rclcpp::shutdown();
-    return 1;
-  }
+  args.erase(args.cbegin());
 
   bool is_fake = true;
   std::string host;
-  if (args.size() > 1)
+  std::array<double, 6> fake_joint_state;
+  for (auto arg : args)
   {
-    host = args[1];
-    if (host.find("robot_ip:=") != std::string::npos)
+    if (arg.find("robot_ip:=") != std::string::npos)
     {
+      host = arg;
       host.replace(host.begin(), host.begin() + 10, "");
       is_fake = false;
     }
-    else if (host.find("ip:=") != std::string::npos)
+    else if (arg.find("ip:=") != std::string::npos)
     {
+      host = arg;
       host.replace(host.begin(), host.begin() + 4, "");
       is_fake = false;
     }
+    else if (arg.find("fake_joint_state:={") != std::string::npos)
+    {
+      std::string temp = arg;
+      temp.replace(temp.begin(), temp.begin() + 19, "");
+      temp.replace(temp.end() - 1, temp.end(), "");
+      std::istringstream ss(temp);
+      std::string token;
+      for (size_t i = 0; i < 6; ++i)
+      {
+        std::getline(ss, token, ',');
+        fake_joint_state[i] = std::stod(token) / 180 * M_PI;
+      }
+    }
     else
     {
-      print_info("ip is not found, using a fake robot");
+      std::stringstream ss;
+      ss << "Invalid argument: " << arg;
+      print_error(ss.str().c_str());
     }
   }
-  else
+
+  if (!is_fake && host.empty())
   {
+    std::stringstream ss;
+    ss << "is_fake: " << is_fake;
     print_fatal("Please provide the 'robot_ip_address'");
     rclcpp::shutdown();
     return 1;
@@ -154,7 +170,7 @@ int main(int argc, char* argv[])
 
   const rclcpp::Node::SharedPtr node = rclcpp::Node::make_shared("tm_driver_node");
 
-  auto tm_svr = std::make_shared<TmSvrRos2>(node, iface, is_fake);
+  auto tm_svr = std::make_shared<TmSvrRos2>(node, iface, is_fake, false, fake_joint_state);
   auto tm_sct = std::make_shared<TmRos2SctMoveit>(node, iface, is_fake);
 
   rclcpp::spin(node);
