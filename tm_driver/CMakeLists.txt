@@ -82,17 +82,26 @@ set(DRIVER_SOURCES
     src/tm_ethernet_slave_connect.cpp
 )
 
-set(DRIVER_DEPENDENCIES rclcpp std_msgs sensor_msgs tf2_geometry_msgs tm_msgs)
+set(DRIVER_DEPENDENCIES
+  ${sensor_msgs_TARGETS}
+  ${std_msgs_TARGETS}
+  ${tm_msgs_TARGETS}
+  rclcpp::rclcpp
+  tf2_geometry_msgs::tf2_geometry_msgs
+)
 
 if(TM_DRIVER_INCLUDE_MOVEIT)
   list(APPEND DRIVER_SOURCES src/tm_ros2_composition_moveit.cpp src/tm_ros2_moveit_sct.cpp)
-  list(APPEND DRIVER_DEPENDENCIES trajectory_msgs control_msgs rclcpp_action)
+  list(APPEND DRIVER_DEPENDENCIES ${control_msgs_TARGETS} ${trajectory_msgs_TARGETS} rclcpp_action::rclcpp_action)
 else()
   list(APPEND DRIVER_SOURCES src/tm_ros2_composition.cpp)
 endif()
 
 add_executable(tm_driver ${DRIVER_SOURCES})
-ament_target_dependencies(tm_driver ${DRIVER_DEPENDENCIES})
+target_link_libraries(tm_driver
+  PUBLIC
+  ${DRIVER_DEPENDENCIES}
+)
 
 install(TARGETS tm_driver DESTINATION lib/${PROJECT_NAME})
 
