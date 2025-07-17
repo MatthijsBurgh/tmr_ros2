@@ -32,12 +32,6 @@ public:
 
   bool sta_updated_;
 
-  int sct_reconnect_timeout_ms_;
-  int sct_reconnect_timeval_ms_;
-
-  std::thread checkListenNodeThread;
-  bool firstEnter = true;
-
   rclcpp::Service<tm_msgs::srv::ConnectTM>::SharedPtr connect_tm_srv_;
 
   rclcpp::Service<tm_msgs::srv::SendScript>::SharedPtr send_script_srv_;
