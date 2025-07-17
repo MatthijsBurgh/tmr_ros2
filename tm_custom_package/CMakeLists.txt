@@ -39,10 +39,22 @@ if(BUILD_TESTING)
 endif()
 
 add_executable(tm_send_command src/send_command.cpp)
-ament_target_dependencies(tm_send_command tm_robot_msgs rclcpp)
+target_link_libraries(tm_send_command
+  PUBLIC
+  ${tm_robot_msgs_TARGETS}
+  rclcpp::rclcpp
+)
 
 add_executable(sub_img src/sub_img.cpp)
-ament_target_dependencies(sub_img rclcpp sensor_msgs std_msgs OpenCV ament_index_cpp)
+target_link_libraries(sub_img
+  PUBLIC
+  ${OpenCV_LIBS}
+  ${sensor_msgs_TARGETS}
+  ${std_msgs_TARGETS}
+  ament_index_cpp::ament_index_cpp
+  rclcpp::rclcpp
+  sensor_msgs::sensor_msgs_library
+)
 
 install(TARGETS tm_send_command sub_img DESTINATION lib/${PROJECT_NAME})
 

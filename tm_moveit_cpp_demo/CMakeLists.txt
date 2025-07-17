@@ -36,7 +36,6 @@ set(TM_MOVEIT_CPP_DEMO_INCLUDE_MOVEIT ${TM_MOVEIT_AUTO_DETECT})
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rosidl_default_runtime REQUIRED)
-find_package(Boost REQUIRED COMPONENTS system)
 
 if(TM_MOVEIT_AUTO_DETECT)
   find_package(moveit_ros_planning_interface QUIET)
@@ -55,7 +54,12 @@ if(TM_MOVEIT_CPP_DEMO_INCLUDE_MOVEIT)
   endif()
 
   add_executable(run_moveit_cpp src/run_moveit_cpp.cpp)
-  ament_target_dependencies(run_moveit_cpp moveit_ros_planning_interface Boost)
+  target_link_libraries(run_moveit_cpp
+    PUBLIC
+    moveit_ros_planning_interface::moveit_common_planning_interface_objects
+    moveit_ros_planning_interface::moveit_move_group_interface
+    moveit_ros_planning_interface::moveit_planning_scene_interface
+  )
   target_compile_definitions(run_moveit_cpp PRIVATE ROS_HUMBLE=${ROS_HUMBLE})
 
   install(
