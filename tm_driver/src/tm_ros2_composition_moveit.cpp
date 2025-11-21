@@ -3,7 +3,7 @@
 #include "tm_driver/tm_ros2_svr.h"
 #include "tm_driver/tm_ros2_moveit_sct.h"
 
-#include <rclcpp/executors.hpp>
+#include <rclcpp/experimental/executors/events_executor/events_executor.hpp>
 #include <rclcpp/node.hpp>
 #include <rclcpp/logging.hpp>
 #include <rclcpp/utilities.hpp>
@@ -173,7 +173,10 @@ int main(int argc, char* argv[])
   auto tm_svr = std::make_shared<TmSvrRos2>(node, iface, is_fake, false, fake_joint_state);
   auto tm_sct = std::make_shared<TmRos2SctMoveit>(node, iface, is_fake);
 
-  rclcpp::spin(node);
+  rclcpp::experimental::executors::EventsExecutor executor;
+  executor.add_node(node);
+  executor.spin();
+  executor.remove_node(node);
 
   rclcpp::shutdown();
   return 0;
