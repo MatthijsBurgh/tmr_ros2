@@ -231,7 +231,7 @@ def _gen_xacro() -> None:
         new_xacro_name = f"macro.{new_model}.urdf.xacro"
 
     file_in = xacro_path / xacro_name
-    file_out = xacro_path / new_xacro_name
+    file_out = Path.cwd() / new_xacro_name
 
     link_tag = "<!--LinkDescription-->"
     link_head = "<?xml version='1.0' encoding='UTF-8'?>\n"
