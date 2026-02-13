@@ -3,8 +3,7 @@
 
   <xacro:arg name="ns" default="" />
   <xacro:arg name="prefix" default="" />
-  <xacro:arg name="color" default="none" />
-  <xacro:arg name="trans_hw_iface" default="hardware_interface/PositionJointInterface" />
+    <xacro:arg name="trans_hw_iface" default="hardware_interface/PositionJointInterface" />
 
   <xacro:include filename="$(find tm_description)/xacro/macro.gazebo.xacro" />
   <xacro:include filename="$(find tm_description)/xacro/macro.transmission.xacro" />
@@ -24,16 +23,7 @@
 
 
   <!-- Arm -->
-  <xacro:property name="color" value="$(arg color)"/>
-  <xacro:if value="${color == 'none'}">
-    <xacro:tm5x-700 ns="$(arg ns)" prefix="$(arg prefix)" />
-  </xacro:if>
-
-
-  <!-- Arm.color.stl -->
-  <xacro:unless value="${color == 'none'}">
-    <xacro:tm5x-700 ns="$(arg ns)" prefix="$(arg prefix)" color="${color}" format="stl" />
-  </xacro:unless>
+  <xacro:tm5x-700 ns="$(arg ns)" prefix="$(arg prefix)" />
 
 
 </robot>

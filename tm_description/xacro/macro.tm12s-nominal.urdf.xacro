@@ -3,7 +3,7 @@
 
   <xacro:include filename="$(find tm_description)/xacro/macro.inertial.xacro" />
 
-  <xacro:macro name="tm12s" params="ns prefix color:=none format:=obj
+  <xacro:macro name="tm12s" params="ns prefix
     joint_1_lower_limit:=${radians(-360)}    joint_1_upper_limit:=${radians(360)}
     joint_2_lower_limit:=${radians(-360)}    joint_2_upper_limit:=${radians(360)}
     joint_3_lower_limit:=${radians(-162)}    joint_3_upper_limit:=${radians(162)}
@@ -76,9 +76,8 @@
   <link name="${prefix}link_0">
     <visual>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm12s/visual/tm12s-tbb_a.${format}" />
+        <mesh filename="package://tm_description/meshes/tm12s/visual/tm12s-tbb_a.obj" />
       </geometry>
-      <material name="${color}" />
     </visual>
     <collision>
       <geometry>
@@ -105,9 +104,8 @@
   <link name="${prefix}link_1">
     <visual>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm12s/visual/tm12s-j1-a.${format}" />
+        <mesh filename="package://tm_description/meshes/tm12s/visual/tm12s-j1-a.obj" />
       </geometry>
-      <material name="${color}" />
     </visual>
     <collision>
       <geometry>
@@ -135,9 +133,8 @@
   <link name="${prefix}link_2">
     <visual>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm12s/visual/tm12s-a1.${format}" />
+        <mesh filename="package://tm_description/meshes/tm12s/visual/tm12s-a1.obj" />
       </geometry>
-      <material name="${color}" />
     </visual>
     <collision>
       <geometry>
@@ -165,9 +162,8 @@
   <link name="${prefix}link_3">
     <visual>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm12s/visual/tm12s-a2.${format}" />
+        <mesh filename="package://tm_description/meshes/tm12s/visual/tm12s-a2.obj" />
       </geometry>
-      <material name="${color}" />
     </visual>
     <collision>
       <geometry>
@@ -195,9 +191,8 @@
   <link name="${prefix}link_4">
     <visual>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm12s/visual/tm12s-j5.${format}" />
+        <mesh filename="package://tm_description/meshes/tm12s/visual/tm12s-j5.obj" />
       </geometry>
-      <material name="${color}" />
     </visual>
     <collision>
       <geometry>
@@ -225,9 +220,8 @@
   <link name="${prefix}link_5">
     <visual>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm12s/visual/tm12s-j6.${format}" />
+        <mesh filename="package://tm_description/meshes/tm12s/visual/tm12s-j6.obj" />
       </geometry>
-      <material name="${color}" />
     </visual>
     <collision>
       <geometry>
@@ -255,9 +249,8 @@
   <link name="${prefix}link_6">
     <visual>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm12s/visual/tm12s-io.${format}" />
+        <mesh filename="package://tm_description/meshes/tm12s/visual/tm12s-io.obj" />
       </geometry>
-      <material name="${color}" />
     </visual>
     <collision>
       <geometry>
