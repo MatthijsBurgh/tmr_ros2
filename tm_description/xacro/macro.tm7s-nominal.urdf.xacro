@@ -81,8 +81,39 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm7s/collision/tm7s-base_c.stl" />
+        <cylinder radius="0.0635" length="0.072"/>
       </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.036" />
+    </collision>
+    <collision>
+      <geometry>
+        <box size="0.02 0.05 0.065"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="-0.0615 0 0.0325" />
+    </collision>
+    <collision>
+      <geometry>
+        <box size="0.177 0.025 0.01"/>
+      </geometry>
+      <origin rpy="0 0 ${radians(45)}" xyz="0 0 0.005" />
+    </collision>
+    <collision>
+      <geometry>
+        <box size="0.177 0.025 0.01"/>
+      </geometry>
+      <origin rpy="0 0 ${radians(-45)}" xyz="0 0 0.005" />
+    </collision>
+    <collision>
+      <geometry>
+        <box size="0.143 0.1075 0.01"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.005" />
+    </collision>
+    <collision>
+      <geometry>
+        <box size="0.1075 0.143 0.01"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.005" />
     </collision>
 <!--inertial-->
     <xacro:cylinder_inertial_z radius="0.06" length="0.05" mass="${mass_0}">
@@ -109,8 +140,15 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm7s/collision/tm7s-j1_c.stl" />
+        <cylinder radius="0.0635" length="0.17475"/>
       </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.00275" />
+    </collision>
+    <collision>
+      <geometry>
+        <cylinder radius="0.0635" length="0.07"/>
+      </geometry>
+      <origin rpy="${radians(90)} 0 0" xyz="0 -0.037 0" />
     </collision>
     <inertial>
       <origin rpy="0.000000 0.000000 0.000000" xyz="0.000000 0.000000 0.000000" />
@@ -138,8 +176,21 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm7s/collision/tm7s-a1_c.stl" />
+        <cylinder radius="0.0635" length="0.17475"/>
       </geometry>
+      <origin rpy="0 0 0" xyz="0 0 -0.15175" />
+    </collision>
+    <collision>
+      <geometry>
+        <cylinder radius="0.0635" length="0.329"/>
+      </geometry>
+      <origin rpy="0 ${radians(90)} 0" xyz="${0.329/2} 0 -0.15" />
+    </collision>
+    <collision>
+      <geometry>
+        <cylinder radius="0.0635" length="0.17475"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0.329 0 -0.15175" />
     </collision>
     <inertial>
       <origin rpy="0.000000 0.000000 0.000000" xyz="0.000000 0.000000 0.000000" />
@@ -167,8 +218,21 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm7s/collision/tm7s-a2_c.stl" />
+        <cylinder radius="0.0635" length="0.101"/>
       </geometry>
+      <origin rpy="0 0 0" xyz="0 0 -0.022" />
+    </collision>
+    <collision>
+      <geometry>
+        <cylinder radius="0.044" length="0.298"/>
+      </geometry>
+      <origin rpy="0 ${radians(90)} 0" xyz="${0.298/2} 0 -0.01625" />
+    </collision>
+    <collision>
+      <geometry>
+        <cylinder radius="0.05" length="0.136"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0.298 0 -0.022" />
     </collision>
     <inertial>
       <origin rpy="0.000000 0.000000 0.000000" xyz="0.000000 0.000000 0.000000" />
@@ -196,8 +260,15 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm7s/collision/tm7s-j5_c.stl" />
+        <cylinder radius="0.05" length="0.06"/>
       </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.031" />
+    </collision>
+    <collision>
+      <geometry>
+        <cylinder radius="0.05" length="0.135"/>
+      </geometry>
+      <origin rpy="${radians(90)} 0 0" xyz="0 -0.0055 0" />
     </collision>
     <inertial>
       <origin rpy="0.000000 0.000000 0.000000" xyz="0.000000 0.000000 0.000000" />
@@ -225,8 +296,15 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm7s/collision/tm7s-j6_c.stl" />
+        <cylinder radius="0.05" length="0.06"/>
       </geometry>
+      <origin rpy="0 0 0" xyz="0 0 -0.031" />
+    </collision>
+    <collision>
+      <geometry>
+        <cylinder radius="0.05" length="0.135"/>
+      </geometry>
+      <origin rpy="${radians(90)} 0 0" xyz="0 -0.0055 0" />
     </collision>
     <inertial>
       <origin rpy="0.000000 0.000000 0.000000" xyz="0.000000 0.000000 0.000000" />
@@ -254,8 +332,15 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm7s/collision/tm7s-io_c.stl" />
+        <cylinder radius="0.05" length="0.065"/>
       </geometry>
+      <origin rpy="0 0 0" xyz="0 0 -0.032" />
+    </collision>
+    <collision>
+      <geometry>
+        <box size="0.075 0.059 0.1175"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="-0.001 0.076 -0.008" />
     </collision>
     <inertial>
       <origin rpy="0.000000 0.000000 0.000000" xyz="0.000000 0.000000 0.000000" />
