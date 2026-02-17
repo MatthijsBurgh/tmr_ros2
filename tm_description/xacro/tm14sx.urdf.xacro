@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="tm12s">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="tm14sx">
 
   <xacro:arg name="ns" default="" />
   <xacro:arg name="prefix" default="" />
@@ -11,10 +11,10 @@
   <xacro:include filename="$(find tm_description)/xacro/macro.materials.xacro" />
 
 
-  <!-- tm12s -->
+  <!-- tm14sx -->
   <!-- If the user want to use newly generated named robot description file as user_defined.urdf.xacro, -->
-  <!-- you must modify 'macro.tm12s-nominal.urdf.xacro' to 'user_defined.urdf.xacro'  -->
-  <xacro:include filename="$(find tm_description)/xacro/macro.tm12s-nominal.urdf.xacro" />
+  <!-- you must modify 'macro.tm14sx-nominal.urdf.xacro' to 'user_defined.urdf.xacro'  -->
+  <xacro:include filename="$(find tm_description)/xacro/macro.tm14sx-nominal.urdf.xacro" />
 
 
   <!--  -->
@@ -24,7 +24,7 @@
 
   <!-- Arm -->
   <xacro:property name="color" value="${'$(arg color)' if '$(arg color)' != 'none' else 'emeraldgreen'}"/>
-  <xacro:tm12s ns="$(arg ns)" prefix="$(arg prefix)" color="${color}" format="obj"/>
+  <xacro:tm14sx ns="$(arg ns)" prefix="$(arg prefix)" color="${color}" format="obj"/>
 
 
 </robot>

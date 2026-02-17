@@ -3,10 +3,10 @@
 
   <xacro:include filename="$(find tm_description)/xacro/macro.inertial.xacro" />
 
-  <xacro:macro name="tm25s" params="ns prefix color format
+  <xacro:macro name="tm30sx" params="ns prefix color format
     joint_1_lower_limit:=${radians(-360)}    joint_1_upper_limit:=${radians(360)}
     joint_2_lower_limit:=${radians(-360)}    joint_2_upper_limit:=${radians(360)}
-    joint_3_lower_limit:=${radians(-166)}    joint_3_upper_limit:=${radians(166)}
+    joint_3_lower_limit:=${radians(-170)}    joint_3_upper_limit:=${radians(170)}
     joint_4_lower_limit:=${radians(-360)}    joint_4_upper_limit:=${radians(360)}
     joint_5_lower_limit:=${radians(-360)}    joint_5_upper_limit:=${radians(360)}
     joint_6_lower_limit:=${radians(-360)}    joint_6_upper_limit:=${radians(360)}
@@ -44,33 +44,33 @@
     <!-- Inertia parameters -->
     <xacro:property name="mass_0" value="1.0" />
     <xacro:property name="mass_1" value="22.667" />
-    <xacro:property name="mass_2" value="36.398" />
+    <xacro:property name="mass_2" value="36.204" />
     <xacro:property name="mass_3" value="8.028" />
-    <xacro:property name="mass_4" value="8.035" />
+    <xacro:property name="mass_4" value="6.975" />
     <xacro:property name="mass_5" value="2.353" />
-    <xacro:property name="mass_6" value="0.720" />
+    <xacro:property name="mass_6" value="0.340" />
 
     <xacro:property name="unit_factor" value="0.000001"/>
     <xacro:property name="ixx_1" value="${138058.33*unit_factor}" />
-    <xacro:property name="ixx_2" value="${279629.48*unit_factor}" />
+    <xacro:property name="ixx_2" value="${279146.89*unit_factor}" />
     <xacro:property name="ixx_3" value="${25838.443*unit_factor}" />
-    <xacro:property name="ixx_4" value="${26765.837*unit_factor}" />
+    <xacro:property name="ixx_4" value="${22651.250*unit_factor}" />
     <xacro:property name="ixx_5" value="${4938.0363*unit_factor}" />
-    <xacro:property name="ixx_6" value="${703.44734*unit_factor}" />
+    <xacro:property name="ixx_6" value="${250.85804*unit_factor}" />
 
     <xacro:property name="iyy_1" value="${215387.34*unit_factor}" />
-    <xacro:property name="iyy_2" value="${6008411.2*unit_factor}" />
+    <xacro:property name="iyy_2" value="${5261249.9*unit_factor}" />
     <xacro:property name="iyy_3" value="${36861.092*unit_factor}" />
-    <xacro:property name="iyy_4" value="${517596.37*unit_factor}" />
+    <xacro:property name="iyy_4" value="${266609.58*unit_factor}" />
     <xacro:property name="iyy_5" value="${5689.9898*unit_factor}" />
-    <xacro:property name="iyy_6" value="${1711.0225*unit_factor}" />
+    <xacro:property name="iyy_6" value="${252.81701*unit_factor}" />
 
     <xacro:property name="izz_1" value="${226340.06*unit_factor}" />
-    <xacro:property name="izz_2" value="${6109219.7*unit_factor}" />
+    <xacro:property name="izz_2" value="${5362053.4*unit_factor}" />
     <xacro:property name="izz_3" value="${38299.020*unit_factor}" />
-    <xacro:property name="izz_4" value="${523322.08*unit_factor}" />
+    <xacro:property name="izz_4" value="${272336.50*unit_factor}" />
     <xacro:property name="izz_5" value="${7195.1432*unit_factor}" />
-    <xacro:property name="izz_6" value="${1854.4783*unit_factor}" />
+    <xacro:property name="izz_6" value="${312.21304*unit_factor}" />
 
     <xacro:property name="specified_color_arms" default="false" />
     <xacro:property name="prefix_monochrome_command" default="true" />
@@ -161,7 +161,7 @@
   <link name="${prefix}link_2">
     <visual>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm25s/visual/tm25s-a1.${format}" />
+        <mesh filename="package://tm_description/meshes/tm30s/visual/tm30s-arm1.${format}" />
       </geometry>
       <xacro:if value="${specified_color_arms}">
         <xacro:tm_material_darkolive />
@@ -172,7 +172,7 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm25s/collision/tm25s-a1_c.stl" />
+        <mesh filename="package://tm_description/meshes/tm30s/collision/tm30s-arm1_c.stl" />
       </geometry>
     </collision>
     <inertial>
@@ -184,7 +184,7 @@
   <joint name="${prefix}joint_3" type="revolute">
     <parent link="${prefix}link_2" />
     <child link="${prefix}link_3" />
-    <origin rpy="0.000000 0.000000 1.570796" xyz="0.950000 0.000000 -0.070000" />
+    <origin rpy="0.000000 0.000000 1.570796" xyz="0.890000 0.000000 -0.070000" />
     <axis xyz="0 0 1" />
 <!--limit-->
     <limit lower="${joint_3_lower_limit}" upper="${joint_3_upper_limit}" velocity="${joint_3_velocity_limit}" effort="${joint_3_effort_limit}" />
@@ -219,7 +219,7 @@
   <joint name="${prefix}joint_4" type="revolute">
     <parent link="${prefix}link_3" />
     <child link="${prefix}link_4" />
-    <origin rpy="1.570796 0.000000 0.000000" xyz="0.000000 -0.800000 0.000000" />
+    <origin rpy="1.570796 0.000000 0.000000" xyz="0.000000 -0.660000 0.000000" />
     <axis xyz="0 0 1" />
 <!--limit-->
     <limit lower="${joint_4_lower_limit}" upper="${joint_4_upper_limit}" velocity="${joint_4_velocity_limit}" effort="${joint_4_effort_limit}" />
@@ -231,7 +231,7 @@
   <link name="${prefix}link_4">
     <visual>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm25s/visual/tm25s-a2.${format}" />
+        <mesh filename="package://tm_description/meshes/tm30s/visual/tm30s-arm2.${format}" />
       </geometry>
       <xacro:if value="${specified_color_arms}">
         <xacro:tm_material_darkolive />
@@ -242,7 +242,7 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm25s/collision/tm25s-a2_c.stl" />
+        <mesh filename="package://tm_description/meshes/tm30s/collision/tm30s-arm2_c.stl" />
       </geometry>
     </collision>
     <inertial>
@@ -301,7 +301,7 @@
   <link name="${prefix}link_6">
     <visual>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm25s/visual/tm25s-io.${format}" />
+        <mesh filename="package://tm_description/meshes/tm5s/visual/tm5s-iox.${format}" />
       </geometry>
       <xacro:if value="${specified_color_arms}">
         <xacro:tm_material_purewhite />
@@ -312,7 +312,7 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm25s/collision/tm25s-io_c.stl" />
+        <mesh filename="package://tm_description/meshes/tm5s/collision/tm5s-iox_c.stl" />
       </geometry>
     </collision>
     <inertial>
