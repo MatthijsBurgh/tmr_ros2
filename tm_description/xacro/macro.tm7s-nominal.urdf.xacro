@@ -115,27 +115,27 @@
     </collision>
     <collision>
       <geometry>
-        <box size="0.177 0.025 0.01"/>
+        <box size="0.177 0.025 0.012"/>
       </geometry>
-      <origin rpy="0 0 ${radians(45)}" xyz="0 0 0.005" />
+      <origin rpy="0 0 ${radians(45)}" xyz="0 0 0.006" />
     </collision>
     <collision>
       <geometry>
-        <box size="0.177 0.025 0.01"/>
+        <box size="0.177 0.025 0.012"/>
       </geometry>
-      <origin rpy="0 0 ${radians(-45)}" xyz="0 0 0.005" />
+      <origin rpy="0 0 ${radians(-45)}" xyz="0 0 0.006" />
     </collision>
     <collision>
       <geometry>
-        <box size="0.143 0.1075 0.01"/>
+        <box size="0.143 0.1075 0.012"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="0 0 0.005" />
+      <origin rpy="0 0 0" xyz="0 0 0.006" />
     </collision>
     <collision>
       <geometry>
-        <box size="0.1075 0.143 0.01"/>
+        <box size="0.1075 0.143 0.012"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="0 0 0.005" />
+      <origin rpy="0 0 0" xyz="0 0 0.006" />
     </collision>
 <!--inertial-->
     <xacro:cylinder_inertial_z radius="0.06" length="0.05" mass="${mass_0}">
