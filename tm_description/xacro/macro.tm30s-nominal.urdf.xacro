@@ -3,44 +3,44 @@
 
   <xacro:include filename="$(find tm_description)/xacro/macro.inertial.xacro" />
 
-  <xacro:macro name="tm30s" params="ns prefix color:=none format:=obj
+  <xacro:macro name="tm30s" params="ns prefix
     joint_1_lower_limit:=${radians(-360)}    joint_1_upper_limit:=${radians(360)}
     joint_2_lower_limit:=${radians(-360)}    joint_2_upper_limit:=${radians(360)}
     joint_3_lower_limit:=${radians(-170)}    joint_3_upper_limit:=${radians(170)}
     joint_4_lower_limit:=${radians(-360)}    joint_4_upper_limit:=${radians(360)}
     joint_5_lower_limit:=${radians(-360)}    joint_5_upper_limit:=${radians(360)}
     joint_6_lower_limit:=${radians(-360)}    joint_6_upper_limit:=${radians(360)}
-    joint_1_velocity_limit:=${radians(100)}    
+    joint_1_velocity_limit:=${radians(100)}
     joint_2_velocity_limit:=${radians(100)}
-    joint_3_velocity_limit:=${radians(130)}    
+    joint_3_velocity_limit:=${radians(130)}
     joint_4_velocity_limit:=${radians(195)}
-    joint_5_velocity_limit:=${radians(210)}    
+    joint_5_velocity_limit:=${radians(210)}
     joint_6_velocity_limit:=${radians(225)}
-    joint_1_effort_limit:=${750}    
-    joint_2_effort_limit:=${750}
-    joint_3_effort_limit:=${350}    
-    joint_4_effort_limit:=${350}
-    joint_5_effort_limit:=${170}    
-    joint_6_effort_limit:=${45}   
+    joint_1_effort_limit:=${1070}
+    joint_2_effort_limit:=${1070}
+    joint_3_effort_limit:=${459}
+    joint_4_effort_limit:=${304}
+    joint_5_effort_limit:=${157}
+    joint_6_effort_limit:=${54}
     safety_limits:=false safety_pos_margin:=0.15
     safety_k_position:=20">
 
-   <xacro:property name="damping_factor" value="0.000"/>
-   <xacro:property name="d1" value="${damping_factor*0.1}"/>
-   <xacro:property name="d2" value="${damping_factor*0.1}"/>
-   <xacro:property name="d3" value="${damping_factor*0.1}"/>
-   <xacro:property name="d4" value="${damping_factor*0.1}"/>
-   <xacro:property name="d5" value="${damping_factor*0.1}"/>
-   <xacro:property name="d6" value="${damping_factor*0.1}"/>
+    <xacro:property name="damping_factor" value="0.000"/>
+    <xacro:property name="d1" value="${damping_factor*0.1}"/>
+    <xacro:property name="d2" value="${damping_factor*0.1}"/>
+    <xacro:property name="d3" value="${damping_factor*0.1}"/>
+    <xacro:property name="d4" value="${damping_factor*0.1}"/>
+    <xacro:property name="d5" value="${damping_factor*0.1}"/>
+    <xacro:property name="d6" value="${damping_factor*0.1}"/>
 
-   <xacro:property name="friction_factor" value="0.000"/>
-   <xacro:property name="f1" value="${friction_factor*0.1}"/>
-   <xacro:property name="f2" value="${friction_factor*0.1}"/>
-   <xacro:property name="f3" value="${friction_factor*0.1}"/>
-   <xacro:property name="f4" value="${friction_factor*0.1}"/>
-   <xacro:property name="f5" value="${friction_factor*0.1}"/>
-   <xacro:property name="f6" value="${friction_factor*0.1}"/>
-      
+    <xacro:property name="friction_factor" value="0.000"/>
+    <xacro:property name="f1" value="${friction_factor*0.1}"/>
+    <xacro:property name="f2" value="${friction_factor*0.1}"/>
+    <xacro:property name="f3" value="${friction_factor*0.1}"/>
+    <xacro:property name="f4" value="${friction_factor*0.1}"/>
+    <xacro:property name="f5" value="${friction_factor*0.1}"/>
+    <xacro:property name="f6" value="${friction_factor*0.1}"/>
+
     <!-- Inertia parameters -->
     <xacro:property name="mass_0" value="1.0" />
     <xacro:property name="mass_1" value="22.667" />
@@ -64,7 +64,7 @@
     <xacro:property name="iyy_4" value="${266609.58*unit_factor}" />
     <xacro:property name="iyy_5" value="${5689.9898*unit_factor}" />
     <xacro:property name="iyy_6" value="${1711.0225*unit_factor}" />
-    
+
     <xacro:property name="izz_1" value="${226340.06*unit_factor}" />
     <xacro:property name="izz_2" value="${5362053.4*unit_factor}" />
     <xacro:property name="izz_3" value="${38299.020*unit_factor}" />
@@ -76,9 +76,8 @@
   <link name="${prefix}link_0">
     <visual>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm25s/visual/tm25s-base.${format}" />
+        <mesh filename="package://tm_description/meshes/tm25s/visual/tm25s-base.obj" />
       </geometry>
-      <material name="${color}" />
     </visual>
     <collision>
       <geometry>
@@ -105,9 +104,8 @@
   <link name="${prefix}link_1">
     <visual>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm25s/visual/tm25s-j1.${format}" />
+        <mesh filename="package://tm_description/meshes/tm25s/visual/tm25s-j1.obj" />
       </geometry>
-      <material name="${color}" />
     </visual>
     <collision>
       <geometry>
@@ -135,9 +133,8 @@
   <link name="${prefix}link_2">
     <visual>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm30s/visual/tm30s-arm1.${format}" />
+        <mesh filename="package://tm_description/meshes/tm30s/visual/tm30s-arm1.obj" />
       </geometry>
-      <material name="${color}" />
     </visual>
     <collision>
       <geometry>
@@ -165,9 +162,8 @@
   <link name="${prefix}link_3">
     <visual>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm25s/visual/tm25s-j4.${format}" />
+        <mesh filename="package://tm_description/meshes/tm25s/visual/tm25s-j4.obj" />
       </geometry>
-      <material name="${color}" />
     </visual>
     <collision>
       <geometry>
@@ -195,9 +191,8 @@
   <link name="${prefix}link_4">
     <visual>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm30s/visual/tm30s-arm2.${format}" />
+        <mesh filename="package://tm_description/meshes/tm30s/visual/tm30s-arm2.obj" />
       </geometry>
-      <material name="${color}" />
     </visual>
     <collision>
       <geometry>
@@ -225,9 +220,8 @@
   <link name="${prefix}link_5">
     <visual>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm25s/visual/tm25s-j6.${format}" />
+        <mesh filename="package://tm_description/meshes/tm25s/visual/tm25s-j6.obj" />
       </geometry>
-      <material name="${color}" />
     </visual>
     <collision>
       <geometry>
@@ -255,9 +249,8 @@
   <link name="${prefix}link_6">
     <visual>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm25s/visual/tm25s-io.${format}" />
+        <mesh filename="package://tm_description/meshes/tm25s/visual/tm25s-io.obj" />
       </geometry>
-      <material name="${color}" />
     </visual>
     <collision>
       <geometry>

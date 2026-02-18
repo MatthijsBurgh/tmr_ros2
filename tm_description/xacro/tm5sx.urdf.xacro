@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="tm5sx">
+
+  <xacro:arg name="ns" default="" />
+  <xacro:arg name="prefix" default="" />
+  <xacro:arg name="trans_hw_iface" default="hardware_interface/PositionJointInterface" />
+
+  <xacro:include filename="$(find tm_description)/xacro/macro.gazebo.xacro" />
+  <xacro:include filename="$(find tm_description)/xacro/macro.transmission.xacro" />
+
+
+  <!-- tm5sx -->
+  <!-- If the user want to use newly generated named robot description file as user_defined.urdf.xacro, -->
+  <!-- you must modify 'macro.tm5sx-nominal.urdf.xacro' to 'user_defined.urdf.xacro'  -->
+  <xacro:include filename="$(find tm_description)/xacro/macro.tm5sx-nominal.urdf.xacro" />
+
+
+  <!--  -->
+  <xacro:tmr_gazebo ns="$(arg ns)" prefix="$(arg prefix)" />
+  <xacro:tmr_transmission prefix="$(arg prefix)" hw_iface="$(arg trans_hw_iface)" />
+
+
+  <!-- Arm -->
+  <xacro:tm5sx ns="$(arg ns)" prefix="$(arg prefix)"/>
+
+
+</robot>
