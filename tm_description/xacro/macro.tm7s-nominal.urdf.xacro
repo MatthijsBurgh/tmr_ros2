@@ -3,7 +3,7 @@
 
   <xacro:include filename="$(find tm_description)/xacro/macro.inertial.xacro" />
 
-  <xacro:macro name="tm7s" params="ns prefix color format
+  <xacro:macro name="tm7s" params="ns prefix
     joint_1_lower_limit:=${radians(-360)}    joint_1_upper_limit:=${radians(360)}
     joint_2_lower_limit:=${radians(-360)}    joint_2_upper_limit:=${radians(360)}
     joint_3_lower_limit:=${radians(-152)}    joint_3_upper_limit:=${radians(152)}
@@ -72,34 +72,12 @@
     <xacro:property name="izz_5" value="${3478.9518*unit_factor}" />
     <xacro:property name="izz_6" value="${1854.4783*unit_factor}" />
 
-    <xacro:property name="specified_color_arms" default="false" />
-    <xacro:property name="prefix_monochrome_command" default="true" />
-
-    <!-- If other applications conflict with the color definition of URDF, try disable_prefix_color to close it -->
-    <xacro:property name="disable_prefix_color" default="false" />
-    <xacro:if value="${disable_prefix_color}">
-      <prefix_monochrome_command value="false"/>
-    </xacro:if>
-    <xacro:if value="${format == 'stl'}">
-      <specified_color_arms value="true"/>
-      <prefix_monochrome_command value="false"/>
-    </xacro:if>
-    <xacro:if value="${prefix_monochrome_command}">
-      <xacro:tm_materials/>
-    </xacro:if>
-
 <!--LinkDescription-->
   <link name="${prefix}link_0">
     <visual>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm7s/visual/tm7s-base.${format}" />
+        <mesh filename="package://tm_description/meshes/tm7s/visual/tm7s-base.obj" />
       </geometry>
-      <xacro:if value="${specified_color_arms}">
-        <xacro:tm_material_whitegraphite />
-      </xacro:if>
-      <xacro:if value="${prefix_monochrome_command}">
-        <material name="${color}" />
-      </xacro:if>
     </visual>
     <collision>
       <geometry>
@@ -157,14 +135,8 @@
   <link name="${prefix}link_1">
     <visual>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm7s/visual/tm7s-j1.${format}" />
+        <mesh filename="package://tm_description/meshes/tm7s/visual/tm7s-j1.obj" />
       </geometry>
-      <xacro:if value="${specified_color_arms}">
-        <xacro:tm_material_darkolive />
-      </xacro:if>
-      <xacro:if value="${prefix_monochrome_command}">
-        <material name="${color}" />
-      </xacro:if>
     </visual>
     <collision>
       <geometry>
@@ -199,14 +171,8 @@
   <link name="${prefix}link_2">
     <visual>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm7s/visual/tm7s-a1.${format}" />
+        <mesh filename="package://tm_description/meshes/tm7s/visual/tm7s-a1.obj" />
       </geometry>
-      <xacro:if value="${specified_color_arms}">
-        <xacro:tm_material_darkolive />
-      </xacro:if>
-      <xacro:if value="${prefix_monochrome_command}">
-        <material name="${color}" />
-      </xacro:if>
     </visual>
     <collision>
       <geometry>
@@ -247,14 +213,8 @@
   <link name="${prefix}link_3">
     <visual>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm7s/visual/tm7s-a2.${format}" />
+        <mesh filename="package://tm_description/meshes/tm7s/visual/tm7s-a2.obj" />
       </geometry>
-      <xacro:if value="${specified_color_arms}">
-        <xacro:tm_material_gold />
-      </xacro:if>
-      <xacro:if value="${prefix_monochrome_command}">
-        <material name="${color}" />
-      </xacro:if>
     </visual>
     <collision>
       <geometry>
@@ -295,14 +255,8 @@
   <link name="${prefix}link_4">
     <visual>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm7s/visual/tm7s-j5.${format}" />
+        <mesh filename="package://tm_description/meshes/tm7s/visual/tm7s-j5.obj" />
       </geometry>
-      <xacro:if value="${specified_color_arms}">
-        <xacro:tm_material_darkolive />
-      </xacro:if>
-      <xacro:if value="${prefix_monochrome_command}">
-        <material name="${color}" />
-      </xacro:if>
     </visual>
     <collision>
       <geometry>
@@ -337,14 +291,8 @@
   <link name="${prefix}link_5">
     <visual>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm7s/visual/tm7s-j6.${format}" />
+        <mesh filename="package://tm_description/meshes/tm7s/visual/tm7s-j6.obj" />
       </geometry>
-      <xacro:if value="${specified_color_arms}">
-        <xacro:tm_material_darkolive />
-      </xacro:if>
-      <xacro:if value="${prefix_monochrome_command}">
-        <material name="${color}" />
-      </xacro:if>
     </visual>
     <collision>
       <geometry>
@@ -379,14 +327,8 @@
   <link name="${prefix}link_6">
     <visual>
       <geometry>
-        <mesh filename="package://tm_description/meshes/tm7s/visual/tm7s-io.${format}" />
+        <mesh filename="package://tm_description/meshes/tm7s/visual/tm7s-io.obj" />
       </geometry>
-      <xacro:if value="${specified_color_arms}">
-        <xacro:tm_material_purewhite />
-      </xacro:if>
-      <xacro:if value="${prefix_monochrome_command}">
-        <material name="${color}" />
-      </xacro:if>
     </visual>
     <collision>
       <geometry>
