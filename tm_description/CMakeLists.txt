@@ -4,7 +4,7 @@ project(tm_description)
 find_package(ament_cmake REQUIRED)
 
 install(
-  DIRECTORY launch meshes rviz xacro
+  DIRECTORY meshes xacro
   DESTINATION share/${PROJECT_NAME}
 )
 
