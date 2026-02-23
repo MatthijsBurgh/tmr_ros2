@@ -1,6 +1,5 @@
 #! /usr/bin/env python3
 
-import os
 import shutil
 import sys
 import xml.etree.cElementTree as ET  # noqa: N812, N817
