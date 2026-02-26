@@ -1,8 +1,5 @@
 import math
-
-# from xml.etree import ElementTree
 import xml.etree.cElementTree as ET  # noqa: N812, N817
-from typing import List, Tuple
 
 import numpy as np
 
@@ -98,7 +95,7 @@ def euler_angles_from_rotation_matrix(R: np.ndarray) -> np.ndarray:  # noqa: N80
 
 # URDF DH ((5+2) x 6) from TM DH Table (7x6) and Delta DH (5x6)
 # a-alpha-beta-d-theta <-- theta-alpha-a-d-t-l-u + delta(theta-alpha-a-d-beta)
-def urdf_DH_from_tm_DH(tm_DH: List[float], tm_DeltaDH: List[float]) -> np.ndarray:  # noqa: N802, N803
+def urdf_DH_from_tm_DH(tm_DH: list[float], tm_DeltaDH: list[float]) -> np.ndarray:  # noqa: N802, N803
     assert len(tm_DH) == 7 * _DoF and len(tm_DeltaDH) == 5 * _DoF
 
     urdf_DH = np.zeros([_DoF + 1, 7])  # noqa: N806
@@ -118,7 +115,7 @@ def urdf_DH_from_tm_DH(tm_DH: List[float], tm_DeltaDH: List[float]) -> np.ndarra
     return urdf_DH
 
 
-def xyzrpys_from_urdf_DH(udh: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:  # noqa: N802
+def xyzrpys_from_urdf_DH(udh: np.ndarray) -> tuple[np.ndarray, np.ndarray]:  # noqa: N802
     np.set_printoptions(suppress=True)
     xyzs = np.zeros([_DoF + 1, 3])
     rpys = np.zeros([_DoF + 1, 3])
@@ -159,12 +156,12 @@ def pretty_xml(element: ET.Element, indent: str, newline: str, level: int = 0) -
             element.text = newline + (indent * (level + 1) + element.text.strip() + newline + indent * (level + 1))
 
     temp = list(element)
-    for subelement in temp:
-        if temp.index(subelement) < (len(temp) - 1):
-            subelement.tail = newline + indent * (level + 1)
+    for sub_element in temp:
+        if temp.index(sub_element) < (len(temp) - 1):
+            sub_element.tail = newline + indent * (level + 1)
         else:
-            subelement.tail = newline + indent * level
-        pretty_xml(subelement, indent, newline, level=level + 1)
+            sub_element.tail = newline + indent * level
+        pretty_xml(sub_element, indent, newline, level=level + 1)
 
 
 def modify_urdf(root: ET.Element, xyzs: np.ndarray, rpys: np.ndarray, udh: np.ndarray, prefix: str = "") -> None:
@@ -227,5 +224,3 @@ def modify_urdf(root: ET.Element, xyzs: np.ndarray, rpys: np.ndarray, udh: np.nd
                 origin = elem.find("origin")
                 origin.attrib["xyz"] = str_from_nparray(np.round(xyzs[6, :], 8))
                 origin.attrib["rpy"] = str_from_nparray(np.round(rpys[6, :], 8))
-
-    pretty_xml(root, "  ", "\n")
