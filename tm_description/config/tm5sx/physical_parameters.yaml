@@ -3,9 +3,9 @@
 physical_parameters:
   link_0:
     mass: 1.0
-    inertia_type: cylinder
-    radius: 0.06
-    length: 0.05
+    ixx: 0.00110833289
+    iyy: 0.00110833289
+    izz: 0.0018
   link_1:
     mass: 4.32
     ixx: 0.0084392993

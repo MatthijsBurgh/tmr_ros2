@@ -1,0 +1,25 @@
+# Visual and collision mesh parameters for tm20s
+
+visual_parameters:
+  mesh_files:
+    link_0:
+      visual: package://tm_description/meshes/tm20s/visual/link0.dae
+      collision: package://tm_description/meshes/tm20s/collision/link0_c.stl
+    link_1:
+      visual: package://tm_description/meshes/tm20s/visual/link1.dae
+      collision: package://tm_description/meshes/tm20s/collision/link1_c.stl
+    link_2:
+      visual: package://tm_description/meshes/tm20s/visual/link2.dae
+      collision: package://tm_description/meshes/tm20s/collision/link2_c.stl
+    link_3:
+      visual: package://tm_description/meshes/tm20s/visual/link3.dae
+      collision: package://tm_description/meshes/tm20s/collision/link3_c.stl
+    link_4:
+      visual: package://tm_description/meshes/tm20s/visual/link4.dae
+      collision: package://tm_description/meshes/tm20s/collision/link4_c.stl
+    link_5:
+      visual: package://tm_description/meshes/tm20s/visual/link5.dae
+      collision: package://tm_description/meshes/tm20s/collision/link5_c.stl
+    link_6:
+      visual: package://tm_description/meshes/tm20s/visual/link6.dae
+      collision: package://tm_description/meshes/tm20s/collision/link6_c.stl

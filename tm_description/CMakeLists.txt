@@ -9,7 +9,7 @@ ament_python_install_package(${PROJECT_NAME})
 
 # Install Python scripts as executables
 install(PROGRAMS
-  tm_description/modify_xacro.py
+  tm_description/gen_kinematics_yaml.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

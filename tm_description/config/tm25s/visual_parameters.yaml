@@ -1,0 +1,25 @@
+# Visual and collision mesh parameters for tm25s
+
+visual_parameters:
+  mesh_files:
+    link_0:
+      visual: package://tm_description/meshes/tm25s/visual/tm25s-base.obj
+      collision: package://tm_description/meshes/tm25s/collision/tm25s-base_c.stl
+    link_1:
+      visual: package://tm_description/meshes/tm25s/visual/tm25s-j1.obj
+      collision: package://tm_description/meshes/tm25s/collision/tm25s-j1_c.stl
+    link_2:
+      visual: package://tm_description/meshes/tm25s/visual/tm25s-a1.obj
+      collision: package://tm_description/meshes/tm25s/collision/tm25s-a1_c.stl
+    link_3:
+      visual: package://tm_description/meshes/tm25s/visual/tm25s-j4.obj
+      collision: package://tm_description/meshes/tm25s/collision/tm25s-j4_c.stl
+    link_4:
+      visual: package://tm_description/meshes/tm25s/visual/tm25s-a2.obj
+      collision: package://tm_description/meshes/tm25s/collision/tm25s-a2_c.stl
+    link_5:
+      visual: package://tm_description/meshes/tm25s/visual/tm25s-j6.obj
+      collision: package://tm_description/meshes/tm25s/collision/tm25s-j6_c.stl
+    link_6:
+      visual: package://tm_description/meshes/tm25s/visual/tm25s-io.obj
+      collision: package://tm_description/meshes/tm25s/collision/tm25s-io_c.stl

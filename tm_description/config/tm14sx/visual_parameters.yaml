@@ -1,0 +1,25 @@
+# Visual and collision mesh parameters for tm14sx
+
+visual_parameters:
+  mesh_files:
+    link_0:
+      visual: package://tm_description/meshes/tm14s/visual/tm14s-base.obj
+      collision: package://tm_description/meshes/tm14s/collision/tm14s-base_c.stl
+    link_1:
+      visual: package://tm_description/meshes/tm14s/visual/tm14s-j1.obj
+      collision: package://tm_description/meshes/tm14s/collision/tm14s-j1_c.stl
+    link_2:
+      visual: package://tm_description/meshes/tm14s/visual/tm14s-a1.obj
+      collision: package://tm_description/meshes/tm14s/collision/tm14s-a1_c.stl
+    link_3:
+      visual: package://tm_description/meshes/tm14s/visual/tm14s-a2.obj
+      collision: package://tm_description/meshes/tm14s/collision/tm14s-a2_c.stl
+    link_4:
+      visual: package://tm_description/meshes/tm14s/visual/tm14s-j5.obj
+      collision: package://tm_description/meshes/tm14s/collision/tm14s-j5_c.stl
+    link_5:
+      visual: package://tm_description/meshes/tm14s/visual/tm14s-j6.obj
+      collision: package://tm_description/meshes/tm14s/collision/tm14s-j6_c.stl
+    link_6:
+      visual: package://tm_description/meshes/tm5s/visual/tm5s-iox.obj
+      collision: package://tm_description/meshes/tm5s/collision/tm5s-iox_c.stl

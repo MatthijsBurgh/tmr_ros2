@@ -6,6 +6,7 @@
     joint_limits_parameters_file
     kinematics_parameters_file
     physical_parameters_file
+    visual_parameters_file
     safety_limits:=false
     safety_pos_margin:=0.15
     safety_k_position:=20">
@@ -14,136 +15,285 @@
     <xacro:property name="joint_limits_params" value="${xacro.load_yaml(joint_limits_parameters_file)}"/>
     <xacro:property name="kinematics_params" value="${xacro.load_yaml(kinematics_parameters_file)}"/>
     <xacro:property name="physical_params" value="${xacro.load_yaml(physical_parameters_file)}"/>
+    <xacro:property name="visual_params" value="${xacro.load_yaml(visual_parameters_file)}"/>
 
-    <!-- Shorthand -->
+    <!-- Shorthand accessors -->
     <xacro:property name="jl" value="${joint_limits_params['joint_limits']}"/>
     <xacro:property name="kin" value="${kinematics_params['kinematics']}"/>
+    <xacro:property name="pp" value="${physical_params['physical_parameters']}"/>
+    <xacro:property name="meshes" value="${visual_params['visual_parameters']['mesh_files']}"/>
 
-    <!-- Damping and friction -->
-    <xacro:property name="damping_factor" value="0.000"/>
-    <xacro:property name="friction_factor" value="0.000"/>
+    <!-- Link 0 (base) -->
+    <link name="${prefix}link_0">
+      <visual>
+        <geometry>
+          <mesh filename="${meshes['link_0']['visual']}"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="${meshes['link_0']['collision']}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <mass value="${pp['link_0']['mass']}"/>
+        <inertia ixx="${pp['link_0']['ixx']}" ixy="0.0" ixz="0.0"
+                 iyy="${pp['link_0']['iyy']}" iyz="0.0"
+                 izz="${pp['link_0']['izz']}"/>
+      </inertial>
+    </link>
 
-    <!-- Link definitions (visual, collision, inertial) from per-model include -->
-    <xacro:tm_links prefix="${prefix}" physical_params="${physical_params['physical_parameters']}"/>
+    <!-- Link 1 -->
+    <link name="${prefix}link_1">
+      <visual>
+        <geometry>
+          <mesh filename="${meshes['link_1']['visual']}"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="${meshes['link_1']['collision']}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <mass value="${pp['link_1']['mass']}"/>
+        <inertia ixx="${pp['link_1']['ixx']}" ixy="0.0" ixz="0.0"
+                 iyy="${pp['link_1']['iyy']}" iyz="0.0"
+                 izz="${pp['link_1']['izz']}"/>
+      </inertial>
+    </link>
+
+    <!-- Link 2 -->
+    <link name="${prefix}link_2">
+      <visual>
+        <geometry>
+          <mesh filename="${meshes['link_2']['visual']}"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="${meshes['link_2']['collision']}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <mass value="${pp['link_2']['mass']}"/>
+        <inertia ixx="${pp['link_2']['ixx']}" ixy="0.0" ixz="0.0"
+                 iyy="${pp['link_2']['iyy']}" iyz="0.0"
+                 izz="${pp['link_2']['izz']}"/>
+      </inertial>
+    </link>
+
+    <!-- Link 3 -->
+    <link name="${prefix}link_3">
+      <visual>
+        <geometry>
+          <mesh filename="${meshes['link_3']['visual']}"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="${meshes['link_3']['collision']}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <mass value="${pp['link_3']['mass']}"/>
+        <inertia ixx="${pp['link_3']['ixx']}" ixy="0.0" ixz="0.0"
+                 iyy="${pp['link_3']['iyy']}" iyz="0.0"
+                 izz="${pp['link_3']['izz']}"/>
+      </inertial>
+    </link>
+
+    <!-- Link 4 -->
+    <link name="${prefix}link_4">
+      <visual>
+        <geometry>
+          <mesh filename="${meshes['link_4']['visual']}"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="${meshes['link_4']['collision']}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <mass value="${pp['link_4']['mass']}"/>
+        <inertia ixx="${pp['link_4']['ixx']}" ixy="0.0" ixz="0.0"
+                 iyy="${pp['link_4']['iyy']}" iyz="0.0"
+                 izz="${pp['link_4']['izz']}"/>
+      </inertial>
+    </link>
+
+    <!-- Link 5 -->
+    <link name="${prefix}link_5">
+      <visual>
+        <geometry>
+          <mesh filename="${meshes['link_5']['visual']}"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="${meshes['link_5']['collision']}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <mass value="${pp['link_5']['mass']}"/>
+        <inertia ixx="${pp['link_5']['ixx']}" ixy="0.0" ixz="0.0"
+                 iyy="${pp['link_5']['iyy']}" iyz="0.0"
+                 izz="${pp['link_5']['izz']}"/>
+      </inertial>
+    </link>
+
+    <!-- Link 6 (end effector) -->
+    <link name="${prefix}link_6">
+      <visual>
+        <geometry>
+          <mesh filename="${meshes['link_6']['visual']}"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="${meshes['link_6']['collision']}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <mass value="${pp['link_6']['mass']}"/>
+        <inertia ixx="${pp['link_6']['ixx']}" ixy="0.0" ixz="0.0"
+                 iyy="${pp['link_6']['iyy']}" iyz="0.0"
+                 izz="${pp['link_6']['izz']}"/>
+      </inertial>
+    </link>
 
     <!-- Base fixed joint -->
-    <link name="${prefix}base" />
+    <link name="${prefix}base"/>
     <joint name="${prefix}base_fixed_joint" type="fixed">
-      <parent link="${prefix}base" />
-      <child link="${prefix}link_0" />
+      <parent link="${prefix}base"/>
+      <child link="${prefix}link_0"/>
       <origin rpy="${kin['base_fixed_joint']['roll']} ${kin['base_fixed_joint']['pitch']} ${kin['base_fixed_joint']['yaw']}"
-              xyz="${kin['base_fixed_joint']['x']} ${kin['base_fixed_joint']['y']} ${kin['base_fixed_joint']['z']}" />
+              xyz="${kin['base_fixed_joint']['x']} ${kin['base_fixed_joint']['y']} ${kin['base_fixed_joint']['z']}"/>
     </joint>
 
     <!-- Joint 1 -->
     <joint name="${prefix}joint_1" type="revolute">
-      <parent link="${prefix}link_0" />
-      <child link="${prefix}link_1" />
+      <parent link="${prefix}link_0"/>
+      <child link="${prefix}link_1"/>
       <origin rpy="${kin['joint_1']['roll']} ${kin['joint_1']['pitch']} ${kin['joint_1']['yaw']}"
-              xyz="${kin['joint_1']['x']} ${kin['joint_1']['y']} ${kin['joint_1']['z']}" />
-      <axis xyz="0 0 1" />
+              xyz="${kin['joint_1']['x']} ${kin['joint_1']['y']} ${kin['joint_1']['z']}"/>
+      <axis xyz="0 0 1"/>
       <limit lower="${radians(jl['joint_1']['min_position'])}" upper="${radians(jl['joint_1']['max_position'])}"
-             velocity="${radians(jl['joint_1']['max_velocity'])}" effort="${jl['joint_1']['max_effort']}" />
+             velocity="${radians(jl['joint_1']['max_velocity'])}" effort="${jl['joint_1']['max_effort']}"/>
       <xacro:if value="${safety_limits}">
-        <safety_controller soft_lower_limit="${radians(jl['joint_1']['min_position']) + safety_pos_margin}"
-                           soft_upper_limit="${radians(jl['joint_1']['max_position']) - safety_pos_margin}"
-                           k_position="${safety_k_position}" k_velocity="0.0" />
+        <safety_controller
+          soft_lower_limit="${radians(jl['joint_1']['min_position']) + safety_pos_margin}"
+          soft_upper_limit="${radians(jl['joint_1']['max_position']) - safety_pos_margin}"
+          k_position="${safety_k_position}" k_velocity="0.0"/>
       </xacro:if>
-      <dynamics damping="${damping_factor * 0.1}" friction="${friction_factor * 0.1}" />
+      <dynamics damping="0.0" friction="0.0"/>
     </joint>
 
     <!-- Joint 2 -->
     <joint name="${prefix}joint_2" type="revolute">
-      <parent link="${prefix}link_1" />
-      <child link="${prefix}link_2" />
+      <parent link="${prefix}link_1"/>
+      <child link="${prefix}link_2"/>
       <origin rpy="${kin['joint_2']['roll']} ${kin['joint_2']['pitch']} ${kin['joint_2']['yaw']}"
-              xyz="${kin['joint_2']['x']} ${kin['joint_2']['y']} ${kin['joint_2']['z']}" />
-      <axis xyz="0 0 1" />
+              xyz="${kin['joint_2']['x']} ${kin['joint_2']['y']} ${kin['joint_2']['z']}"/>
+      <axis xyz="0 0 1"/>
       <limit lower="${radians(jl['joint_2']['min_position'])}" upper="${radians(jl['joint_2']['max_position'])}"
-             velocity="${radians(jl['joint_2']['max_velocity'])}" effort="${jl['joint_2']['max_effort']}" />
+             velocity="${radians(jl['joint_2']['max_velocity'])}" effort="${jl['joint_2']['max_effort']}"/>
       <xacro:if value="${safety_limits}">
-        <safety_controller soft_lower_limit="${radians(jl['joint_2']['min_position']) + safety_pos_margin}"
-                           soft_upper_limit="${radians(jl['joint_2']['max_position']) - safety_pos_margin}"
-                           k_position="${safety_k_position}" k_velocity="0.0" />
+        <safety_controller
+          soft_lower_limit="${radians(jl['joint_2']['min_position']) + safety_pos_margin}"
+          soft_upper_limit="${radians(jl['joint_2']['max_position']) - safety_pos_margin}"
+          k_position="${safety_k_position}" k_velocity="0.0"/>
       </xacro:if>
-      <dynamics damping="${damping_factor * 0.1}" friction="${friction_factor * 0.1}" />
+      <dynamics damping="0.0" friction="0.0"/>
     </joint>
 
     <!-- Joint 3 -->
     <joint name="${prefix}joint_3" type="revolute">
-      <parent link="${prefix}link_2" />
-      <child link="${prefix}link_3" />
+      <parent link="${prefix}link_2"/>
+      <child link="${prefix}link_3"/>
       <origin rpy="${kin['joint_3']['roll']} ${kin['joint_3']['pitch']} ${kin['joint_3']['yaw']}"
-              xyz="${kin['joint_3']['x']} ${kin['joint_3']['y']} ${kin['joint_3']['z']}" />
-      <axis xyz="0 0 1" />
+              xyz="${kin['joint_3']['x']} ${kin['joint_3']['y']} ${kin['joint_3']['z']}"/>
+      <axis xyz="0 0 1"/>
       <limit lower="${radians(jl['joint_3']['min_position'])}" upper="${radians(jl['joint_3']['max_position'])}"
-             velocity="${radians(jl['joint_3']['max_velocity'])}" effort="${jl['joint_3']['max_effort']}" />
+             velocity="${radians(jl['joint_3']['max_velocity'])}" effort="${jl['joint_3']['max_effort']}"/>
       <xacro:if value="${safety_limits}">
-        <safety_controller soft_lower_limit="${radians(jl['joint_3']['min_position']) + safety_pos_margin}"
-                           soft_upper_limit="${radians(jl['joint_3']['max_position']) - safety_pos_margin}"
-                           k_position="${safety_k_position}" k_velocity="0.0" />
+        <safety_controller
+          soft_lower_limit="${radians(jl['joint_3']['min_position']) + safety_pos_margin}"
+          soft_upper_limit="${radians(jl['joint_3']['max_position']) - safety_pos_margin}"
+          k_position="${safety_k_position}" k_velocity="0.0"/>
       </xacro:if>
-      <dynamics damping="${damping_factor * 0.1}" friction="${friction_factor * 0.1}" />
+      <dynamics damping="0.0" friction="0.0"/>
     </joint>
 
     <!-- Joint 4 -->
     <joint name="${prefix}joint_4" type="revolute">
-      <parent link="${prefix}link_3" />
-      <child link="${prefix}link_4" />
+      <parent link="${prefix}link_3"/>
+      <child link="${prefix}link_4"/>
       <origin rpy="${kin['joint_4']['roll']} ${kin['joint_4']['pitch']} ${kin['joint_4']['yaw']}"
-              xyz="${kin['joint_4']['x']} ${kin['joint_4']['y']} ${kin['joint_4']['z']}" />
-      <axis xyz="0 0 1" />
+              xyz="${kin['joint_4']['x']} ${kin['joint_4']['y']} ${kin['joint_4']['z']}"/>
+      <axis xyz="0 0 1"/>
       <limit lower="${radians(jl['joint_4']['min_position'])}" upper="${radians(jl['joint_4']['max_position'])}"
-             velocity="${radians(jl['joint_4']['max_velocity'])}" effort="${jl['joint_4']['max_effort']}" />
+             velocity="${radians(jl['joint_4']['max_velocity'])}" effort="${jl['joint_4']['max_effort']}"/>
       <xacro:if value="${safety_limits}">
-        <safety_controller soft_lower_limit="${radians(jl['joint_4']['min_position']) + safety_pos_margin}"
-                           soft_upper_limit="${radians(jl['joint_4']['max_position']) - safety_pos_margin}"
-                           k_position="${safety_k_position}" k_velocity="0.0" />
+        <safety_controller
+          soft_lower_limit="${radians(jl['joint_4']['min_position']) + safety_pos_margin}"
+          soft_upper_limit="${radians(jl['joint_4']['max_position']) - safety_pos_margin}"
+          k_position="${safety_k_position}" k_velocity="0.0"/>
       </xacro:if>
-      <dynamics damping="${damping_factor * 0.1}" friction="${friction_factor * 0.1}" />
+      <dynamics damping="0.0" friction="0.0"/>
     </joint>
 
     <!-- Joint 5 -->
     <joint name="${prefix}joint_5" type="revolute">
-      <parent link="${prefix}link_4" />
-      <child link="${prefix}link_5" />
+      <parent link="${prefix}link_4"/>
+      <child link="${prefix}link_5"/>
       <origin rpy="${kin['joint_5']['roll']} ${kin['joint_5']['pitch']} ${kin['joint_5']['yaw']}"
-              xyz="${kin['joint_5']['x']} ${kin['joint_5']['y']} ${kin['joint_5']['z']}" />
-      <axis xyz="0 0 1" />
+              xyz="${kin['joint_5']['x']} ${kin['joint_5']['y']} ${kin['joint_5']['z']}"/>
+      <axis xyz="0 0 1"/>
       <limit lower="${radians(jl['joint_5']['min_position'])}" upper="${radians(jl['joint_5']['max_position'])}"
-             velocity="${radians(jl['joint_5']['max_velocity'])}" effort="${jl['joint_5']['max_effort']}" />
+             velocity="${radians(jl['joint_5']['max_velocity'])}" effort="${jl['joint_5']['max_effort']}"/>
       <xacro:if value="${safety_limits}">
-        <safety_controller soft_lower_limit="${radians(jl['joint_5']['min_position']) + safety_pos_margin}"
-                           soft_upper_limit="${radians(jl['joint_5']['max_position']) - safety_pos_margin}"
-                           k_position="${safety_k_position}" k_velocity="0.0" />
+        <safety_controller
+          soft_lower_limit="${radians(jl['joint_5']['min_position']) + safety_pos_margin}"
+          soft_upper_limit="${radians(jl['joint_5']['max_position']) - safety_pos_margin}"
+          k_position="${safety_k_position}" k_velocity="0.0"/>
       </xacro:if>
-      <dynamics damping="${damping_factor * 0.1}" friction="${friction_factor * 0.1}" />
+      <dynamics damping="0.0" friction="0.0"/>
     </joint>
 
     <!-- Joint 6 -->
     <joint name="${prefix}joint_6" type="revolute">
-      <parent link="${prefix}link_5" />
-      <child link="${prefix}link_6" />
+      <parent link="${prefix}link_5"/>
+      <child link="${prefix}link_6"/>
       <origin rpy="${kin['joint_6']['roll']} ${kin['joint_6']['pitch']} ${kin['joint_6']['yaw']}"
-              xyz="${kin['joint_6']['x']} ${kin['joint_6']['y']} ${kin['joint_6']['z']}" />
-      <axis xyz="0 0 1" />
+              xyz="${kin['joint_6']['x']} ${kin['joint_6']['y']} ${kin['joint_6']['z']}"/>
+      <axis xyz="0 0 1"/>
       <limit lower="${radians(jl['joint_6']['min_position'])}" upper="${radians(jl['joint_6']['max_position'])}"
-             velocity="${radians(jl['joint_6']['max_velocity'])}" effort="${jl['joint_6']['max_effort']}" />
+             velocity="${radians(jl['joint_6']['max_velocity'])}" effort="${jl['joint_6']['max_effort']}"/>
       <xacro:if value="${safety_limits}">
-        <safety_controller soft_lower_limit="${radians(jl['joint_6']['min_position']) + safety_pos_margin}"
-                           soft_upper_limit="${radians(jl['joint_6']['max_position']) - safety_pos_margin}"
-                           k_position="${safety_k_position}" k_velocity="0.0" />
+        <safety_controller
+          soft_lower_limit="${radians(jl['joint_6']['min_position']) + safety_pos_margin}"
+          soft_upper_limit="${radians(jl['joint_6']['max_position']) - safety_pos_margin}"
+          k_position="${safety_k_position}" k_velocity="0.0"/>
       </xacro:if>
-      <dynamics damping="${damping_factor * 0.1}" friction="${friction_factor * 0.1}" />
+      <dynamics damping="0.0" friction="0.0"/>
     </joint>
 
     <!-- Flange fixed joint -->
-    <link name="${prefix}flange" />
+    <link name="${prefix}flange"/>
     <joint name="${prefix}flange_fixed_joint" type="fixed">
-      <parent link="${prefix}link_6" />
-      <child link="${prefix}flange" />
+      <parent link="${prefix}link_6"/>
+      <child link="${prefix}flange"/>
       <origin rpy="${kin['flange_fixed_joint']['roll']} ${kin['flange_fixed_joint']['pitch']} ${kin['flange_fixed_joint']['yaw']}"
-              xyz="${kin['flange_fixed_joint']['x']} ${kin['flange_fixed_joint']['y']} ${kin['flange_fixed_joint']['z']}" />
+              xyz="${kin['flange_fixed_joint']['x']} ${kin['flange_fixed_joint']['y']} ${kin['flange_fixed_joint']['z']}"/>
     </joint>
 
   </xacro:macro>
