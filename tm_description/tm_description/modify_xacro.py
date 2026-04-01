@@ -7,11 +7,12 @@ from collections.abc import Iterable
 from math import radians
 from pathlib import Path
 
+import numpy as np
 import rclpy
 from rclpy.node import Node
 from rclpy.utilities import remove_ros_args
 
-from tm_mod_urdf._modify_urdf import modify_urdf, pretty_xml, urdf_DH_from_tm_DH, xyzrpys_from_urdf_DH
+from tm_description._modify_urdf import modify_urdf, pretty_xml, urdf_DH_from_tm_DH, xyzrpys_from_urdf_DH
 from tm_msgs.srv import AskItem
 
 
@@ -285,6 +286,101 @@ class ModifyXacro(Node):
             self.get_logger().info("File saved with new kinematic values")
             self.get_logger().info(f"[new save file path:] {file_save.as_posix()}")
 
+    def gen_kinematics_yaml(self, original_model: str, output_file: str = "") -> None:
+        """Generate a kinematics YAML file from the robot's DH parameters.
+
+        Instead of creating a custom xacro file, this generates a kinematics YAML
+        that can be passed to tm.urdf.xacro via the kinematics_params argument.
+        """
+        res_dh = self.call_ask_item("DHTable")
+        if not res_dh.startswith("DHTable={") or not res_dh.endswith("}"):
+            msg = f"Invalid parameters DHTable, expected format: DHTable={{...}}, got: {res_dh}"
+            raise ValueError(msg)
+
+        res_dd = self.call_ask_item("DeltaDH")
+        if not res_dd.startswith("DeltaDH={") or not res_dd.endswith("}"):
+            msg = f"Invalid parameters DeltaDH, expected format: DeltaDH={{...}}, got: {res_dd}"
+            raise ValueError(msg)
+
+        self.get_logger().info("Loading the correction kinematics parameters from your TM Robot")
+
+        dh_strs = res_dh[9:-1].split(",")
+        dd_strs = res_dd[9:-1].split(",")
+
+        if len(dh_strs) != 42:
+            msg = (
+                f"Invalid length of DH parameters, "
+                f"expected 42 values (7 parameters for each of the 6 joints), got {len(dh_strs)}"
+            )
+            raise ValueError(msg)
+
+        if len(dd_strs) != 30:
+            msg = (
+                f"Invalid length of DeltaDH parameters, "
+                f"expected 30 values (5 parameters for each of the 6 joints), got {len(dd_strs)}"
+            )
+            raise ValueError(msg)
+
+        dh = list(map(float, dh_strs))
+        dd = list(map(float, dd_strs))
+
+        udh = urdf_DH_from_tm_DH(dh, dd)
+        xyzs, rpys = xyzrpys_from_urdf_DH(udh)
+
+        # Determine output file path
+        if not output_file:
+            res = self.call_ask_item("ControlBox_SN")
+            if not res.startswith('ControlBox_SN="') or not res.endswith('"'):
+                msg = f'Invalid parameters ControlBox_SN, expected format: ControlBox_SN="...", got: {res}'
+                raise ValueError(msg)
+            sn = res[15:-1].lower()
+            output_file = f"{sn}_kinematics.yaml"
+
+        file_out = Path.cwd() / output_file
+
+        # Generate YAML content
+        lines = [f"# Calibrated kinematics parameters for {original_model}", ""]
+        lines.append("kinematics:")
+
+        joint_names = ["joint_1", "joint_2", "joint_3", "joint_4", "joint_5", "joint_6"]
+        for i, name in enumerate(joint_names):
+            lines.append(f"  {name}:")
+            lines.append(f"    x: {np.round(xyzs[i, 0], 8)}")
+            lines.append(f"    y: {np.round(xyzs[i, 1], 8)}")
+            lines.append(f"    z: {np.round(xyzs[i, 2], 8)}")
+            lines.append(f"    roll: {np.round(rpys[i, 0], 8)}")
+            lines.append(f"    pitch: {np.round(rpys[i, 1], 8)}")
+            lines.append(f"    yaw: {np.round(rpys[i, 2], 8)}")
+
+        # Base fixed joint (always identity)
+        lines.append("  base_fixed_joint:")
+        lines.append("    x: 0.0")
+        lines.append("    y: 0.0")
+        lines.append("    z: 0.0")
+        lines.append("    roll: 0.0")
+        lines.append("    pitch: 0.0")
+        lines.append("    yaw: 0.0")
+
+        # Flange fixed joint
+        lines.append("  flange_fixed_joint:")
+        lines.append(f"    x: {np.round(xyzs[6, 0], 8)}")
+        lines.append(f"    y: {np.round(xyzs[6, 1], 8)}")
+        lines.append(f"    z: {np.round(xyzs[6, 2], 8)}")
+        lines.append(f"    roll: {np.round(rpys[6, 0], 8)}")
+        lines.append(f"    pitch: {np.round(rpys[6, 1], 8)}")
+        lines.append(f"    yaw: {np.round(rpys[6, 2], 8)}")
+
+        yaml_content = "\n".join(lines) + "\n"
+
+        with file_out.open("w") as f:
+            f.write(yaml_content)
+
+        self.get_logger().info(f"Kinematics YAML saved to: {file_out.as_posix()}")
+        self.get_logger().info(
+            "Use this file with tm.urdf.xacro: "
+            f"xacro tm.urdf.xacro tm_type:={original_model} kinematics_params:={file_out.as_posix()}"
+        )
+
 
 def main(args: Iterable | None = None) -> int:
     from rclpy.executors import ExternalShutdownException
@@ -315,6 +411,41 @@ def main(args: Iterable | None = None) -> int:
         node.gen_xacro(**vars(parsed_args))
     except (RuntimeError, ValueError) as e:
         node.get_logger().error(f"Failed to generate a new URDF model:\n{e}")
+    except KeyboardInterrupt:
+        return 0
+    except ExternalShutdownException:
+        return 1
+    finally:
+        rclpy.try_shutdown()
+
+    return 0
+
+
+def main_gen_kinematics_yaml(args: Iterable | None = None) -> int:
+    """Entry point for generating kinematics YAML from robot DH parameters."""
+    from rclpy.executors import ExternalShutdownException
+
+    parser = argparse.ArgumentParser(
+        description="Generate a kinematics YAML file from the robot's calibrated DH parameters. "
+        "The output YAML can be used with tm.urdf.xacro via the kinematics_params argument."
+    )
+    parser.add_argument("original_model", type=str, help="The robot model type (e.g., tm5s, tm12s)")
+    parser.add_argument(
+        "--output",
+        "-o",
+        dest="output_file",
+        type=str,
+        default="",
+        help="Output YAML file name. If not specified, uses the robot serial number.",
+    )
+    parsed_args = parser.parse_args(remove_ros_args(args)[1:])
+
+    rclpy.init(args=args)
+    try:
+        node = ModifyXacro()
+        node.gen_kinematics_yaml(**vars(parsed_args))
+    except (RuntimeError, ValueError) as e:
+        node.get_logger().error(f"Failed to generate kinematics YAML:\n{e}")
     except KeyboardInterrupt:
         return 0
     except ExternalShutdownException:

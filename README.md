@@ -664,10 +664,52 @@ and then directly refer to steps 5~6 below.
 
 Real kinematic values vary from TM robot to another one as each robot is calibrated at the factory.
 
-The user can use the `tm_mod_urdf` package to extract specific kinematic values from your TM robot,
-which are taken into account by a Python script using a specific set of commands to automatically generate a new URDF
-or Xacro robot model description file. If the user just wants to use the TM Robot nominal model to control the robot,
+The `tm_description` package provides tools to extract specific kinematic values from your TM robot
+and generate either a custom kinematics YAML file or a custom URDF/Xacro robot model description file.
+If the user just wants to use the TM Robot nominal model to control the robot,
 the user can skip the rest of this chapter.
+
+### Using YAML-based kinematics (recommended)
+
+The recommended approach is to generate a kinematics YAML file from your robot's calibrated parameters
+and pass it to the unified `tm.urdf.xacro` file. This follows the same pattern as the
+[Universal Robots ROS2 Description](https://github.com/UniversalRobots/Universal_Robots_ROS2_Description) package.
+
+#### Using the unified xacro with default (nominal) parameters
+
+```bash
+# Use default nominal kinematics for a specific robot type
+xacro tm.urdf.xacro tm_type:=tm5s
+xacro tm.urdf.xacro tm_type:=tm12s
+```
+
+#### Generating custom kinematics YAML from a real robot
+
+1. Connect to your TM Robot and run the driver:
+
+   ```bash
+   source /opt/ros/${ROS_DISTRO}/setup.bash
+   cd <workspace>
+   source ./install/setup.bash
+   ros2 run tm_driver tm_driver robot_ip:=<robot_ip_address>
+   ```
+
+2. In another terminal, generate the kinematics YAML:
+
+   ```bash
+   source /opt/ros/${ROS_DISTRO}/setup.bash
+   cd <workspace>
+   source ./install/setup.bash
+   ros2 run tm_description gen_kinematics_yaml tm5s
+   ```
+
+   This generates a YAML file (named after the robot's serial number) containing calibrated kinematics.
+
+3. Use the generated YAML with the unified xacro:
+
+   ```bash
+   xacro tm.urdf.xacro tm_type:=tm5s kinematics_params:=/path/to/your_kinematics.yaml
+   ```
 
 ### Corrected kinematics value description
 
@@ -681,133 +723,13 @@ The kinematic parameter compensated deviations of the robot can improve the abso
 If the user needs to improve simulation accuracy or end effector tracking performance,
 it is recommended that the user import the corrected calibrated kinematic parameters from the real TM Robot
 to replace the nominal set of D-H parameters.
-Techman Robot provides a URDF file that configures the TM Robot model with a set of nominal DH parameters,
-and one that uses the programming scripts to obtain calibrated kinematic parameters from a parameter server,
-which is connected to your TM robot and perform a set of overrides to output a new corrected URDF file.
 
-The common Python script is used as follows:
+### Legacy: Generating custom Xacro files
 
- ```bash
- python3 <script_name> <urdf_from> <urdf_gen>
- ```
-
-- `<script_name>`: Provide `modify_xacro.py` or `modify_urdf.py` two Python scripts program as options.
-- `<urdf_from>`: The first argument represents the original URDF model form of the TM Robot,
-  and the file part naming[^14] is `<urdf_from>`.
-
-[^14]: There are several built-in TM Robot nominal robot model settings, available for tm5-900, tm5-700, tm12, and tm14 models, as well as the eyeless models tm5x-900, tm5x-700, tm12x and tm14x models.
-
- For example, select the tm12 nominal robot model as the input model form, the user can type tm12 as the `<urdf_from>`.
- For details of this item, please refer to the `modify_urdf.py` or `modify_xacro.py` code.
-
-- `<urdf_gen>`: The second argument means the newly generated URDF model form of the TM Robot,
-  and the file[^15] name is `<urdf_gen>`.
-
- [^15]: For example, if the user names it `test` and selects `modify_xacro.py` as script program, a `test.urdf.xacro` robot description file will be generated.
-
- The Python script for more specific arguments is used as follows:
-
- ```bash
- python3 <script_name> <urdf_from> <urdf_gen> <specific_param>
- ```
-
-- <specific_param>: The third argument is provided for use in some special cases.
-  Please refer to the scripting program[^16] for details of this item.
-
- [^16]: For a simple third argument example, type the argument `-M` as follows:
-        Example: ```python3 modify_xacro.py tm5-900 test -M```
-
- &rarr; A robot description file "`macro.test.urdf.xacro`" will be generated, and the string 'macro.'
- is prepended to the `<urdf_gen>` name.
-
-#### Create with specific kinematic parameters of the local TM Robot
+The legacy approach of generating custom Xacro files is still supported via the `modify_xacro` command.
 
 :bulb: Do you run the driver to maintain the connection with TM Robot,
 make sure that TM Robot's operating software (TMflow) network settings are ready and the Listen node is running.
-
-- #### Take generating a new Xacro file as an example
-
-The following steps describe
-how to import specific kinematic values using a real TM5-900 Robot following the procedure below
-and select the corresponding type tm5-900 as an example of `<urdf_from>`.
-
-1. In a terminal: Source setup.bash in the workspace path and run the driver to connect to TM Robot by typing
-
-   ```bash
-   source /opt/ros/${ROS_DISTRO}/setup.bash
-   cd <workspace
-   source ./install/setup.bash
-   ros2 run tm_driver tm_driver robot_ip:=<robot_ip_address>
-   ```
-
-   The parameter `<robot_ip_address>` means the IP address of your TM Robot, the user can get it through TM Flow.
-
-2. In another new terminal: source setup.bash in the workspace path,
-   change the current directory to the directory path of the python script to correct URDF,
-   and then enter the specified command format to generate a new named URDF with arguments,
-   for example, named `user_defined`.
-
-   ```bash
-   source /opt/ros/${ROS_DISTRO}/setup.bash
-   cd <workspace
-   source ./install/setup.bash
-   cd src/tm_mod_urdf/tm_mod_urdf
-   python3 modify_xacro.py tm5-900 user_defined
-   ```
-
-   When this procedure is completed,
-   the user can find that the newly generated named robot description file has been saved,
-   e.g. `user_defined.urdf.xacro`.
-
-3. Next, the user must modify the filename part of the default pre-built nominal robot model in `tm5-900.urdf.xacro` to
-   a newly generated robot model description naming the file.
-
-   ```bash
-   cd src\tm_description\xacro\
-   vim tm5-900.urdf.xacro
-   ```
-
-   or use `gedit` text editor instead of `vim` to edit the file contents, by typing
-
-   ```bash
-   gedit tm5-900.urdf.xacro
-   ```
-
-   :bookmark_tabs: Note1:
-   If your real Robot is a TM5-700, in the above example,
-   you should type `tm5-700` as an example for `<urdf_from>` and modify the `tm5-700.urdf.xacro` file.
-
-   :bookmark_tabs: Note2: If your real Robot is the eyeless model as a TM5X-700,
-   in the above example,
-   you should type `tm5x-700` as an example for `<urdf_from>` and modify the `tm5x-700.urdf.xacro` file.
-
-   Please refer to the following to modify the content format of the filename line:
-
-   ```xml
-   <?xml version="1.0"?>
-   <robot xmlns:xacro="https://www.ros.org/wiki/xacro" name="YOUR_ROBOT_NAME">
-     <!-- Before modification: (Take the pre-built TM5-900 nominal robot model as an example) -->
-     <xacro:include filename="$(find tm_description)/xacro/macro.tm5-900-nominal.urdf.xacro" />
-     <!-- After modification: (Replace with your actual newly generated Xacro file) -->
-     <xacro:include filename="$(find tm_description)/xacro/user_defined.urdf.xacro" />
-   </robot>
-   ```
-
-Finally,
-the user can launch the modified robot file `tm5-900.urdf.xacro`
-to run your TM Robot or simulate the robot more accurately.
-
-:bulb: __Tip__: Remember to recompile since the code has been changed.
-
-Please go back to your specific workspace.
-Then you can choose `colcon build --cmake-clean-cache` to rebuild, or you can clean the build,
-install and log directories with `rm -r build install log` before executing `colcon build`.
-
-- #### Take generating a new URDF file as an example
-
-The following steps describe
-how to import specific kinematic values using a real TM5-900 Robot following the procedure below
-and select the corresponding type tm5-900 as an example of `<urdf_from>`.
 
 1. In a terminal: Source setup.bash in the workspace path and run the driver to connect to TM Robot by typing
 
@@ -815,39 +737,30 @@ and select the corresponding type tm5-900 as an example of `<urdf_from>`.
    source /opt/ros/${ROS_DISTRO}/setup.bash
    cd <workspace>
    source ./install/setup.bash
-   ros2 run tm_driver tm_driver robot_ip:=<robot_ip_address
+   ros2 run tm_driver tm_driver robot_ip:=<robot_ip_address>
    ```
 
-   The parameter `<robot_ip_address` means the IP address of your TM Robot, the user can get it through TM Flow.
+   The parameter `<robot_ip_address>` means the IP address of your TM Robot, the user can get it through TM Flow.
 
 2. In another new terminal: source setup.bash in the workspace path,
-   change the current directory to the directory path of the python script to correct URDF,
-   and then enter the specified command format to generate a new named URDF with arguments,
+   and then enter the specified command to generate a new named URDF with arguments,
    for example, named `user_defined`.
 
-```bash
-source /opt/ros/${ROS_DISTRO}/setup.bash
-cd <workspace>
-source ./install/setup.bash
-cd src/tm_mod_urdf/tm_mod_urdf
-python3 modify_urdf.py tm5-900 user_defined
-```
+   ```bash
+   source /opt/ros/${ROS_DISTRO}/setup.bash
+   cd <workspace>
+   source ./install/setup.bash
+   ros2 run tm_description modify_xacro tm5s user_defined
+   ```
 
-When this procedure is completed,
-the user can find that the newly generated named robot description file has been saved, e.g. `user_defined.urdf`.
-
-:bookmark_tabs: Note1: If your real Robot is a TM12, in the above example, you should type tm12 as an example for `<urdf_from>`.
-
-:bookmark_tabs: Note2: If your real Robot is the eyeless model as a TM12X,
-in the above example, you should type tm12x as an example for `<urdf_from>`.
-
-Finally, the user can use the new robot file, such as `user_defined.urdf`,
-instead of the default nominal URDF model to run your TM Robot or simulate the robot more accurately.
+   When this procedure is completed,
+   the user can find that the newly generated named robot description file has been saved,
+   e.g. `user_defined.urdf.xacro`.
 
 :bulb: __Tip__: Remember to recompile since the code has been changed.
 
-Please go back to your specific workspace. Then you can choose `colcon build --cmake-clean-cache` to rebuild,
-or you can clean the build,
+Please go back to your specific workspace.
+Then you can choose `colcon build --cmake-clean-cache` to rebuild, or you can clean the build,
 install and log directories with `rm -r build install log` before executing `colcon build`.
 
 #### Import information available on the screen
