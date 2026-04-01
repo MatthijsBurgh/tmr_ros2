@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="$(arg name)">
+
+  <!-- Robot type and naming -->
+  <xacro:arg name="name" default="tm_robot"/>
+  <xacro:arg name="tm_type" default="tm5s"/>
+  <xacro:arg name="prefix" default=""/>
+  <xacro:arg name="ns" default=""/>
+  <xacro:arg name="trans_hw_iface" default="hardware_interface/PositionJointInterface"/>
+
+  <!-- YAML parameter file paths (default to model-specific config) -->
+  <xacro:arg name="joint_limit_params"
+    default="$(find tm_description)/config/$(arg tm_type)/joint_limits.yaml"/>
+  <xacro:arg name="kinematics_params"
+    default="$(find tm_description)/config/$(arg tm_type)/default_kinematics.yaml"/>
+  <xacro:arg name="physical_params"
+    default="$(find tm_description)/config/$(arg tm_type)/physical_parameters.yaml"/>
+  <xacro:arg name="visual_params"
+    default="$(find tm_description)/config/$(arg tm_type)/visual_parameters.yaml"/>
+
+  <!-- Safety settings -->
+  <xacro:arg name="safety_limits" default="false"/>
+  <xacro:arg name="safety_pos_margin" default="0.15"/>
+  <xacro:arg name="safety_k_position" default="20"/>
+
+  <!-- Include macros -->
+  <xacro:include filename="$(find tm_description)/xacro/tm_macro.xacro"/>
+  <xacro:include filename="$(find tm_description)/xacro/macro.gazebo.xacro"/>
+  <xacro:include filename="$(find tm_description)/xacro/macro.transmission.xacro"/>
+
+  <!-- Gazebo and transmission setup -->
+  <xacro:tmr_gazebo ns="$(arg ns)" prefix="$(arg prefix)"/>
+  <xacro:tmr_transmission prefix="$(arg prefix)" hw_iface="$(arg trans_hw_iface)"/>
+
+  <!-- Instantiate the robot -->
+  <xacro:tm_robot
+    prefix="$(arg prefix)"
+    joint_limits_parameters_file="$(arg joint_limit_params)"
+    kinematics_parameters_file="$(arg kinematics_params)"
+    physical_parameters_file="$(arg physical_params)"
+    visual_parameters_file="$(arg visual_params)"
+    safety_limits="$(arg safety_limits)"
+    safety_pos_margin="$(arg safety_pos_margin)"
+    safety_k_position="$(arg safety_k_position)"
+  />
+
+</robot>

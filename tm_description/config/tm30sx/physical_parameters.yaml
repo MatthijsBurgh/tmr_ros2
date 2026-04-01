@@ -1,0 +1,38 @@
+# Physical parameters for tm30sx
+
+physical_parameters:
+  link_0:
+    mass: 1.0
+    ixx: 0.00110833289
+    iyy: 0.00110833289
+    izz: 0.0018
+  link_1:
+    mass: 22.667
+    ixx: 0.13805833
+    iyy: 0.21538734
+    izz: 0.22634006
+  link_2:
+    mass: 36.204
+    ixx: 0.27914689
+    iyy: 5.2612499
+    izz: 5.3620534
+  link_3:
+    mass: 8.028
+    ixx: 0.025838443
+    iyy: 0.036861092
+    izz: 0.03829902
+  link_4:
+    mass: 6.975
+    ixx: 0.02265125
+    iyy: 0.26660958
+    izz: 0.2723365
+  link_5:
+    mass: 2.353
+    ixx: 0.0049380363
+    iyy: 0.0056899898
+    izz: 0.0071951432
+  link_6:
+    mass: 0.34
+    ixx: 0.00025085804
+    iyy: 0.00025281701
+    izz: 0.00031221304

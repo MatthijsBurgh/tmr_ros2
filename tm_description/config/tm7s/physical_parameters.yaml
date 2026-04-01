@@ -1,0 +1,38 @@
+# Physical parameters for tm7s
+
+physical_parameters:
+  link_0:
+    mass: 1.0
+    ixx: 0.00110833289
+    iyy: 0.00110833289
+    izz: 0.0018
+  link_1:
+    mass: 4.32
+    ixx: 0.0084392993
+    iyy: 0.013793964
+    izz: 0.014241226
+  link_2:
+    mass: 9.456
+    ixx: 0.028756423
+    iyy: 0.24070011
+    izz: 0.2522961
+  link_3:
+    mass: 2.618
+    ixx: 0.004027884
+    iyy: 0.035507262
+    izz: 0.036908834
+  link_4:
+    mass: 1.77
+    ixx: 0.0020460318
+    iyy: 0.0031718293
+    izz: 0.0034789518
+  link_5:
+    mass: 1.77
+    ixx: 0.0020460318
+    iyy: 0.0031718293
+    izz: 0.0034789518
+  link_6:
+    mass: 0.72
+    ixx: 0.00070344734
+    iyy: 0.0017110225
+    izz: 0.0018544783

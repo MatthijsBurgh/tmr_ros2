@@ -1,0 +1,39 @@
+# Joint limits for tm20s
+
+joint_limits:
+  joint_1:
+    # degrees
+    min_position: -360.0
+    max_position: 360.0
+    max_velocity: 130.0
+    max_effort: 459.0
+  joint_2:
+    # degrees
+    min_position: -360.0
+    max_position: 360.0
+    max_velocity: 95.0
+    max_effort: 484.0
+  joint_3:
+    # degrees
+    min_position: -162.0
+    max_position: 162.0
+    max_velocity: 125.0
+    max_effort: 229.0
+  joint_4:
+    # degrees
+    min_position: -360.0
+    max_position: 360.0
+    max_velocity: 160.0
+    max_effort: 70.0
+  joint_5:
+    # degrees
+    min_position: -360.0
+    max_position: 360.0
+    max_velocity: 190.0
+    max_effort: 54.0
+  joint_6:
+    # degrees
+    min_position: -360.0
+    max_position: 360.0
+    max_velocity: 225.0
+    max_effort: 34.0
