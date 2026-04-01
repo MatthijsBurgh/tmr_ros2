@@ -1,0 +1,38 @@
+# Physical parameters for tm6s
+
+physical_parameters:
+  link_0:
+    mass: 1.0
+    inertia_type: cylinder
+    radius: 0.06
+    length: 0.05
+  link_1:
+    mass: 8.2
+    ixx: 0.025963078
+    iyy: 0.037671229
+    izz: 0.03885637
+  link_2:
+    mass: 16.166
+    ixx: 0.064778187
+    iyy: 2.4947109
+    izz: 2.5134133
+  link_3:
+    mass: 3.985
+    ixx: 0.0062864466
+    iyy: 0.35617035
+    izz: 0.3576128
+  link_4:
+    mass: 1.77
+    ixx: 0.0020460318
+    iyy: 0.0031718293
+    izz: 0.0034789518
+  link_5:
+    mass: 1.77
+    ixx: 0.0020460318
+    iyy: 0.0031718293
+    izz: 0.0034789518
+  link_6:
+    mass: 0.72
+    ixx: 0.00070344734
+    iyy: 0.0017110225
+    izz: 0.0018544783

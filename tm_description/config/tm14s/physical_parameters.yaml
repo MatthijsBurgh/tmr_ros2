@@ -1,0 +1,38 @@
+# Physical parameters for tm14s
+
+physical_parameters:
+  link_0:
+    mass: 1.0
+    inertia_type: cylinder
+    radius: 0.06
+    length: 0.05
+  link_1:
+    mass: 8.2
+    ixx: 0.025963078
+    iyy: 0.037671229
+    izz: 0.03885637
+  link_2:
+    mass: 14.934
+    ixx: 0.055929284
+    iyy: 0.86278903
+    izz: 0.88144687
+  link_3:
+    mass: 3.147
+    ixx: 0.0046945431
+    iyy: 0.13409854
+    izz: 0.13552591
+  link_4:
+    mass: 1.77
+    ixx: 0.0020460318
+    iyy: 0.0031718293
+    izz: 0.0034789518
+  link_5:
+    mass: 1.77
+    ixx: 0.0020460318
+    iyy: 0.0031718293
+    izz: 0.0034789518
+  link_6:
+    mass: 0.72
+    ixx: 0.00070344734
+    iyy: 0.0017110225
+    izz: 0.0018544783

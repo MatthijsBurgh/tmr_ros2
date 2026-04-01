@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find tm_description)/xacro/macro.inertial.xacro" />
+
+  <xacro:macro name="tm_links" params="prefix physical_params">
+
+    <link name="${prefix}link_0">
+        <visual>
+          <geometry>
+            <mesh filename="package://tm_description/meshes/tm25s/visual/tm25s-base.obj" />
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="package://tm_description/meshes/tm25s/collision/tm25s-base_c.stl" />
+          </geometry>
+        </collision>
+    <!--inertial-->
+        <xacro:cylinder_inertial_z radius="${physical_params['link_0']['radius']}" length="${physical_params['link_0']['length']}" mass="${physical_params['link_0']['mass']}">
+          <origin rpy="0.000000 0.000000 0.000000" xyz="0.000000 0.000000 0.000000" />
+        </xacro:cylinder_inertial_z>
+      </link>
+
+    <link name="${prefix}link_1">
+        <visual>
+          <geometry>
+            <mesh filename="package://tm_description/meshes/tm25s/visual/tm25s-j1.obj" />
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="package://tm_description/meshes/tm25s/collision/tm25s-j1_c.stl" />
+          </geometry>
+        </collision>
+        <inertial>
+          <origin rpy="0.000000 0.000000 0.000000" xyz="0.000000 0.000000 0.000000" />
+          <mass value="${physical_params['link_1']['mass']}" />
+          <inertia ixx="${physical_params['link_1']['ixx']}" ixy="0.0" ixz="0.0" iyy="${physical_params['link_1']['iyy']}" iyz="0.0" izz="${physical_params['link_1']['izz']}" />
+        </inertial>
+      </link>
+
+    <link name="${prefix}link_2">
+        <visual>
+          <geometry>
+            <mesh filename="package://tm_description/meshes/tm30s/visual/tm30s-arm1.obj" />
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="package://tm_description/meshes/tm30s/collision/tm30s-arm1_c.stl" />
+          </geometry>
+        </collision>
+        <inertial>
+          <origin rpy="0.000000 0.000000 0.000000" xyz="0.000000 0.000000 0.000000" />
+          <mass value="${physical_params['link_2']['mass']}" />
+          <inertia ixx="${physical_params['link_2']['ixx']}" ixy="0.0" ixz="0.0" iyy="${physical_params['link_2']['iyy']}" iyz="0.0" izz="${physical_params['link_2']['izz']}" />
+        </inertial>
+      </link>
+
+    <link name="${prefix}link_3">
+        <visual>
+          <geometry>
+            <mesh filename="package://tm_description/meshes/tm25s/visual/tm25s-j4.obj" />
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="package://tm_description/meshes/tm25s/collision/tm25s-j4_c.stl" />
+          </geometry>
+        </collision>
+        <inertial>
+          <origin rpy="0.000000 0.000000 0.000000" xyz="0.000000 0.000000 0.000000" />
+          <mass value="${physical_params['link_3']['mass']}" />
+          <inertia ixx="${physical_params['link_3']['ixx']}" ixy="0.0" ixz="0.0" iyy="${physical_params['link_3']['iyy']}" iyz="0.0" izz="${physical_params['link_3']['izz']}" />
+        </inertial>
+      </link>
+
+    <link name="${prefix}link_4">
+        <visual>
+          <geometry>
+            <mesh filename="package://tm_description/meshes/tm30s/visual/tm30s-arm2.obj" />
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="package://tm_description/meshes/tm30s/collision/tm30s-arm2_c.stl" />
+          </geometry>
+        </collision>
+        <inertial>
+          <origin rpy="0.000000 0.000000 0.000000" xyz="0.000000 0.000000 0.000000" />
+          <mass value="${physical_params['link_4']['mass']}" />
+          <inertia ixx="${physical_params['link_4']['ixx']}" ixy="0.0" ixz="0.0" iyy="${physical_params['link_4']['iyy']}" iyz="0.0" izz="${physical_params['link_4']['izz']}" />
+        </inertial>
+      </link>
+
+    <link name="${prefix}link_5">
+        <visual>
+          <geometry>
+            <mesh filename="package://tm_description/meshes/tm25s/visual/tm25s-j6.obj" />
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="package://tm_description/meshes/tm25s/collision/tm25s-j6_c.stl" />
+          </geometry>
+        </collision>
+        <inertial>
+          <origin rpy="0.000000 0.000000 0.000000" xyz="0.000000 0.000000 0.000000" />
+          <mass value="${physical_params['link_5']['mass']}" />
+          <inertia ixx="${physical_params['link_5']['ixx']}" ixy="0.0" ixz="0.0" iyy="${physical_params['link_5']['iyy']}" iyz="0.0" izz="${physical_params['link_5']['izz']}" />
+        </inertial>
+      </link>
+
+    <link name="${prefix}link_6">
+        <visual>
+          <geometry>
+            <mesh filename="package://tm_description/meshes/tm25s/visual/tm25s-io.obj" />
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="package://tm_description/meshes/tm25s/collision/tm25s-io_c.stl" />
+          </geometry>
+        </collision>
+        <inertial>
+          <origin rpy="0.000000 0.000000 0.000000" xyz="0.000000 0.000000 0.000000" />
+          <mass value="${physical_params['link_6']['mass']}" />
+          <inertia ixx="${physical_params['link_6']['ixx']}" ixy="0.0" ixz="0.0" iyy="${physical_params['link_6']['iyy']}" iyz="0.0" izz="${physical_params['link_6']['izz']}" />
+        </inertial>
+      </link>
+
+  </xacro:macro>
+
+</robot>
