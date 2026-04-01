@@ -67,7 +67,7 @@ class ModifyXacro(Node):
 
     def gen_xacro(self, original_model: str, new_model: str, specific_w: str = "") -> None:
         ###############################################################################################
-        # example: generate a new_model file (macro.xxxooo.urdf.xacro), base on tm5-900-norminal model
+        # example: generate a new_model file (macro.xxxooo.urdf.xacro), base on tm5-900-nominal model
         # syntax : python3 modify_xacro.py original_model new_model
         # [key-in] original_model: tm5-900  , [key-in] new_model: xxxooo
         # [key-in] shell cmd $ python3 modify_xacro.py tm5-900 xxxooo
